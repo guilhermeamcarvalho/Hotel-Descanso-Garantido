@@ -14,7 +14,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 | ETAPA | RESPONSÁVEL | STATUS |
 |-------|-------------|--------|
 | 1. Estrutura Básica e Menu | Guilherme | ✅ Concluída |
-| 2. Funções de Data e Arquivo | Rafael | ⏳ Pendente |
+| 2. Funções de Data e Arquivo | Rafael | ✅ Concluída |
 | 3. Cadastros Básicos | Samuel | ⏳ Pendente |
 | 4. Busca e Quartos | Guilherme | ⏳ Pendente |
 | 5. Datas e Listagens | Rafael | ⏳ Pendente |
