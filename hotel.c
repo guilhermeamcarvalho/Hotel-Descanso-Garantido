@@ -193,7 +193,61 @@ int validarData(Data d) {
     return 1;  // Data válida
 }
 
+// ============================================================
+// FUNÇÕES PARA SALVAR DADOS EM ARQUIVOS
+// ============================================================
 
+/*
+ * Função: salvarClienteArquivo
+ * Objetivo: Salvar um cliente no arquivo binário
+ * Parâmetros: c - estrutura Cliente a ser salva
+ * Retorno: void
+ */
+void salvarClienteArquivo(Cliente c)
+{
+    FILE *arq = fopen(ARQ_CLIENTES, "ab");  // Abre para append binário
+    fwrite(&c, sizeof(Cliente), 1, arq);    // Escreve estrutura no arquivo
+    fclose(arq);                            // Fecha arquivo
+}
+
+/*
+ * Função: salvarFuncionarioArquivo
+ * Objetivo: Salvar um funcionário no arquivo binário
+ * Parâmetros: arquivo - estrutura Funcionario a ser salva
+ * Retorno: void
+ */
+void salvarFuncionarioArquivo(Funcionario arquivo)
+{
+    FILE *arq = fopen(ARQ_FUNCIONARIOS, "ab");
+    fwrite(&arquivo, sizeof(Funcionario), 1, arq);
+    fclose(arq);
+}
+
+/*
+ * Função: salvarQuartoArquivo
+ * Objetivo: Salvar um quarto no arquivo binário
+ * Parâmetros: q - estrutura Quarto a ser salva
+ * Retorno: void
+ */
+void salvarQuartoArquivo(Quarto q)
+{
+    FILE *arq = fopen(ARQ_QUARTOS, "ab");
+    fwrite(&q, sizeof(Quarto), 1, arq);
+    fclose(arq);
+}
+
+/*
+ * Função: salvarEstadiaArquivo
+ * Objetivo: Salvar uma estadia no arquivo binário
+ * Parâmetros: e - estrutura Estadia a ser salva
+ * Retorno: void
+ */
+void salvarEstadiaArquivo(Estadia e)
+{
+    FILE *arq = fopen(ARQ_ESTADIAS, "ab");
+    fwrite(&e, sizeof(Estadia), 1, arq);
+    fclose(arq);
+}
 
 
 
