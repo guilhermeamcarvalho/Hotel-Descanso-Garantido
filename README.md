@@ -13,7 +13,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 
 | ETAPA | RESPONSÁVEL | STATUS |
 |-------|-------------|--------|
-| 1. Estrutura Básica e Menu | Guilherme | ⏳ Pendente |
+| 1. Estrutura Básica e Menu | Guilherme | ✅ Concluída |
 | 2. Funções de Data e Arquivo | Rafael | ⏳ Pendente |
 | 3. Cadastros Básicos | Samuel | ⏳ Pendente |
 | 4. Busca e Quartos | Guilherme | ⏳ Pendente |
@@ -34,20 +34,20 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 ```c
 1. #includes (stdio.h, stdlib.h, string.h) ✅
 2. Structs: Data, Cliente, Funcionario, Quarto, Estadia✅
-3. Constantes dos arquivos: ARQ_CLIENTES, ARQ_FUNCIONARIOS, etc.
-4. Função limparEntrada()
+3. Constantes dos arquivos: ARQ_CLIENTES, ARQ_FUNCIONARIOS, etc.✅
+4. Função limparEntrada()✅
 5. Função main() com menu esqueleto (13 opções)✅
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] Structs definidas corretamente
-- [ ] Constantes dos arquivos definidas
-- [ ] `limparEntrada()` funciona
-- [ ] Menu principal exibe todas as opções
-- [ ] Programa compila sem erros: `gcc hotel.c -o hotel`
-- [ ] Programa executa sem crash
-- [ ] Menu navega entre opções (mesmo sem funcionalidades)
-- [ ] Opção 0 (Sair) funciona
+- [✅] Structs definidas corretamente
+- [✅] Constantes dos arquivos definidas
+- [✅] `limparEntrada()` funciona
+- [✅] Menu principal exibe todas as opções
+- [✅] Programa compila sem erros: `gcc hotel.c -o hotel`
+- [✅] Programa executa sem crash
+- [✅] Menu navega entre opções (mesmo sem funcionalidades)
+- [✅] Opção 0 (Sair) funciona
 
 ### **🧪 TESTES A REALIZAR:**
 ```bash
