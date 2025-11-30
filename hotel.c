@@ -78,6 +78,49 @@ typedef struct
     int estadiaAtiva;       // Status: 1 = ativa, 0 = finalizada
 } Estadia;
 
+// ============================================================
+// DEFINIÇÃO DOS NOMES DOS ARQUIVOS DE DADOS
+// ============================================================
+
+// Nomes dos arquivos binários onde os dados serão persistidos
+const char *ARQ_CLIENTES = "clientes.bin";        // Arquivo de clientes
+const char *ARQ_FUNCIONARIOS = "funcionarios.bin"; // Arquivo de funcionários
+const char *ARQ_QUARTOS = "quartos.bin";          // Arquivo de quartos
+const char *ARQ_ESTADIAS = "estadias.bin";        // Arquivo de estadias
+
+// ============================================================
+// FUNÇÃO AUXILIAR PARA LIMPAR BUFFER DE ENTRADA
+// ============================================================
+
+/*
+ * Função: limparEntrada
+ * Objetivo: Limpar o buffer de entrada do teclado para evitar problemas
+ *           com funções como scanf e fgets
+ * Parâmetros: -
+ * Retorno: void
+ */
+void limparEntrada()
+{
+    int c;  // Variável para armazenar cada caractere
+    // Lê e descarta todos os caracteres até encontrar \n ou EOF
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+        // Loop vazio - apenas consome os caracteres
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ============================================================
 // FUNÇÃO PRINCIPAL - MENU DO SISTEMA (ESQUELETO INICIAL)

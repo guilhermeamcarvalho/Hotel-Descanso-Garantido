@@ -32,11 +32,11 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
-1. #includes (stdio.h, stdlib.h, string.h)
-2. Structs: Data, Cliente, Funcionario, Quarto, Estadia
+1. #includes (stdio.h, stdlib.h, string.h) ✅
+2. Structs: Data, Cliente, Funcionario, Quarto, Estadia✅
 3. Constantes dos arquivos: ARQ_CLIENTES, ARQ_FUNCIONARIOS, etc.
 4. Função limparEntrada()
-5. Função main() com menu esqueleto (13 opções)
+5. Função main() com menu esqueleto (13 opções)✅
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
