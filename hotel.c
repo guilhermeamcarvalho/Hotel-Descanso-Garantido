@@ -163,6 +163,35 @@ int diasNoMes(int mes, int ano)
     }
 }
 
+// ============================================================
+// FUNÇÃO DE VALIDAÇÃO DE DATA
+// ============================================================
+
+/*
+ * Função: validarData
+ * Objetivo: Verificar se uma data é válida
+ * Parâmetros: d - estrutura Data contendo dia, mês e ano
+ * Retorno: int - 1 se válida, 0 se inválida
+ */
+int validarData(Data d) {
+    // Validar ano (consideramos de 1900 a 2100 como válido)
+    if (d.ano < 1900 || d.ano > 2100) {
+        return 0;  // Ano fora do intervalo permitido
+    }
+    
+    // Validar mês (deve estar entre 1 e 12)
+    if (d.mes < 1 || d.mes > 12) {
+        return 0;  // Mês inválido
+    }
+    
+    // Validar dia baseado no mês e ano
+    int diasNoMesValido = diasNoMes(d.mes, d.ano);  // Obtém dias do mês
+    if (d.dia < 1 || d.dia > diasNoMesValido) {
+        return 0;  // Dia inválido para o mês/ano
+    }
+    
+    return 1;  // Data válida
+}
 
 
 
