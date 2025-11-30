@@ -1,3 +1,84 @@
+/* 
+ * Sistema de Gerenciamento Hoteleiro - Hotel Descanso Garantido
+ * Desenvolvido por: Guilherme, Rafael e Samuel
+ * 
+ * Descrição: Sistema completo para gerenciamento de um hotel,
+ * incluindo cadastro de clientes, funcionários, quartos,
+ * gerenciamento de estadias e sistema de fidelidade.
+ */
+
+#include <stdio.h>      // (printf, scanf, etc.)
+#include <stdlib.h>     // (FILE, malloc, etc.)
+#include <string.h>     // Para funções de manipulação de strings
+
+// ============================================================
+// DEFINIÇÃO DE STRUCTS (ESTRUTURAS DE DADOS)
+// ============================================================
+
+/*
+ * Estrutura para armazenar datas
+ * Armazena dia, mês e ano para uso em todo o sistema
+ */
+typedef struct
+{
+    int dia;    // Dia do mês (1-31)
+    int mes;    // Mês do ano (1-12)
+    int ano;    // Ano completo (ex: 2024)
+} Data;
+
+/*
+ * Estrutura para armazenar informações dos clientes
+ * Contém todos os dados necessários para identificar e contatar clientes
+ */
+typedef struct
+{
+    int codigoCliente;      // Código único do cliente (gerado automaticamente)
+    char nome[50];          // Nome completo do cliente (máximo 49 caracteres + \0)
+    char endereco[50];      // Endereço do cliente
+    char telefone[20];      // Telefone para contato
+} Cliente;
+
+/*
+ * Estrutura para armazenar informações dos funcionários
+ * Registra dados dos colaboradores do hotel
+ */
+typedef struct
+{
+    int codigoFuncionario;  // Código único do funcionário
+    char nome[50];          // Nome completo do funcionário
+    char telefone[20];      // Telefone para contato
+    char cargo[30];         // Cargo/função no hotel
+    double salario;         // Salário mensal
+} Funcionario;
+
+/*
+ * Estrutura para armazenar informações dos quartos
+ * Define as características e status de cada quarto
+ */
+typedef struct
+{
+    int numeroQuarto;       // Número do quarto (deve ser único)
+    int capacidade;         // Número máximo de hóspedes
+    double valorDiaria;     // Preço por diária
+    int estaOcupado;        // Status: 0 = livre, 1 = ocupado
+} Quarto;
+
+/*
+ * Estrutura para armazenar informações das estadias
+ * Registra todas as informações de uma hospedagem
+ */
+typedef struct
+{
+    int codigoEstadia;      // Código único da estadia
+    int codigoCliente;      // Código do cliente hospedado
+    int numeroQuarto;       // Número do quarto ocupado
+    Data dataEntrada;       // Data de check-in
+    Data dataSaida;         // Data de check-out
+    int quantidadeDiarias;  // Número total de diárias
+    int estadiaAtiva;       // Status: 1 = ativa, 0 = finalizada
+} Estadia;
+
+
 // ============================================================
 // FUNÇÃO PRINCIPAL - MENU DO SISTEMA (ESQUELETO INICIAL)
 // ============================================================
