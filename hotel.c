@@ -109,6 +109,59 @@ void limparEntrada()
     }
 }
 
+// ============================================================
+// FUNÇÕES PARA CÁLCULO DE DIÁRIAS (VALIDAÇÃO DE DATAS)
+// ============================================================
+
+/*
+ * Função: diasFevereiro
+ * Objetivo: Determinar quantos dias tem fevereiro em um determinado ano
+ *           Considera anos bissextos
+ * Parâmetros: ano - ano a ser verificado
+ * Retorno: int - 29 se for bissexto, 28 se não for
+ */
+int diasFevereiro(int ano)
+{
+    int bissexto = 0;  // Flag para indicar se é ano bissexto
+
+    // Verifica se é ano bissexto (divisível por 4)
+    if (ano % 4 == 0)
+    {
+        // Exceção: se for divisível por 100, só é bissexto se for divisível por 400
+        if (ano % 100 != 0 || ano % 400 == 0)
+            bissexto = 1;  // É bissexto
+    }
+    
+    // Retorna quantidade de dias conforme o ano
+    if (bissexto == 1)
+        return 29;  // Fevereiro em ano bissexto
+    else
+        return 28;  // Fevereiro em ano não bissexto
+}
+
+/*
+ * Função: diasNoMes
+ * Objetivo: Retornar o número de dias em um determinado mês/ano
+ * Parâmetros: mes - mês (1-12)
+ *             ano - ano para verificar fevereiro
+ * Retorno: int - número de dias no mês
+ */
+int diasNoMes(int mes, int ano)
+{
+    // Switch para determinar dias conforme o mês
+    switch (mes)
+    {
+    case 2:  // Fevereiro - depende do ano
+        return diasFevereiro(ano);
+    case 4:   // Abril
+    case 6:   // Junho
+    case 9:   // Setembro
+    case 11:  // Novembro
+        return 30;  // Meses com 30 dias
+    default:  // Todos os outros meses
+        return 31;  // Meses com 31 dias
+    }
+}
 
 
 
