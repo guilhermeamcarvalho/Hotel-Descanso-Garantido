@@ -448,3 +448,43 @@ int gerarCodigoEstadia()
     fclose(arquivo);
     return maior + 1;
 }
+
+// ============================================================
+// FUNÇÕES DE CADASTRO
+// ============================================================
+
+/*
+ * Função: cadastrarCliente
+ * Objetivo: Cadastrar um novo cliente no sistema
+ *           Coleta informações via console e salva em arquivo
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void cadastrarCliente()
+{
+    Cliente c;
+    c.codigoCliente = gerarCodigoCliente();  // Gera código automaticamente
+
+    // Limpa buffer e coleta dados do cliente
+    limparEntrada();
+    printf("\nNome completo: ");
+    fgets(c.nome, 50, stdin);
+    c.nome[strcspn(c.nome, "\n")] = 0;  // Remove \n do final
+
+    printf("Endereco: ");
+    fgets(c.endereco, 50, stdin);
+    c.endereco[strcspn(c.endereco, "\n")] = 0;
+
+    printf("Telefone: ");
+    fgets(c.telefone, 20, stdin);
+    c.telefone[strcspn(c.telefone, "\n")] = 0;
+
+    // Salva cliente no arquivo
+    salvarClienteArquivo(c);
+    printf("\nCliente cadastrado com sucesso! (Codigo %d)\n", c.codigoCliente);
+    
+    // Pausa antes de voltar ao menu
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
