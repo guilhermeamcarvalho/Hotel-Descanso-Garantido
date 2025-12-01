@@ -15,7 +15,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 |-------|-------------|--------|
 | 1. Estrutura Básica e Menu | Guilherme | ✅ Concluída |
 | 2. Funções de Data e Arquivo | Rafael | ✅ Concluída |
-| 3. Cadastros Básicos | Samuel | ⏳ Pendente |
+| 3. Cadastros Básicos | Samuel | ✅ Concluída |
 | 4. Busca e Quartos | Guilherme | ⏳ Pendente |
 | 5. Datas e Listagens | Rafael | ⏳ Pendente |
 | 6. Sistema de Estadias | Samuel | ⏳ Pendente |
