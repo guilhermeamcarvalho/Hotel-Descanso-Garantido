@@ -488,3 +488,51 @@ void cadastrarCliente()
     limparEntrada();
     getchar();
 }
+
+/*
+ * Função: cadastrarFuncionario
+ * Objetivo: Cadastrar um novo funcionário no sistema
+ *           Inclui validação de salário (não pode ser negativo)
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void cadastrarFuncionario()
+{
+    Funcionario arquivo;
+    arquivo.codigoFuncionario = gerarCodigoFuncionario();
+
+    // Coleta dados básicos
+    limparEntrada();
+    printf("\nNome completo: ");
+    fgets(arquivo.nome, 50, stdin);
+    arquivo.nome[strcspn(arquivo.nome, "\n")] = 0;
+
+    printf("Telefone: ");
+    fgets(arquivo.telefone, 20, stdin);
+    arquivo.telefone[strcspn(arquivo.telefone, "\n")] = 0;
+
+    printf("Cargo: ");
+    fgets(arquivo.cargo, 30, stdin);
+    arquivo.cargo[strcspn(arquivo.cargo, "\n")] = 0;
+
+    // Validação de salário (deve ser positivo)
+    do
+    {
+        printf("Salario: ");
+        scanf("%lf", &arquivo.salario);
+        if (arquivo.salario < 0)
+            printf("Valor invalido! O salario nao pode ser negativo.\n");
+    } while (arquivo.salario < 0);
+
+    // Salva funcionário
+    salvarFuncionarioArquivo(arquivo);
+    printf("\nFuncionario cadastrado! (Codigo %d)\n", arquivo.codigoFuncionario);
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+// ATUALIZAÇÃO DO MAIN para usar as novas funções:
+// No switch case 1: cadastrarCliente();
+// No switch case 2: cadastrarFuncionario();
