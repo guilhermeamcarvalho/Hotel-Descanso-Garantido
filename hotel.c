@@ -371,3 +371,80 @@ int main()
 
     return 0;  // Retorno padrão indicando execução bem sucedida
 }
+// ============================================================
+// FUNÇÕES PARA GERAR CÓDIGOS AUTOMÁTICOS
+// ============================================================
+
+/*
+ * Função: gerarCodigoCliente
+ * Objetivo: Gerar um código único para novo cliente
+ *           Lê o arquivo para encontrar o maior código e incrementa
+ * Parâmetros: -
+ * Retorno: int - próximo código disponível
+ */
+int gerarCodigoCliente()
+{
+    FILE *arquivo = fopen(ARQ_CLIENTES, "rb");  // Abre para leitura binária
+    if (!arquivo)  // Se arquivo não existe
+        return 1;  // Primeiro código será 1
+
+    Cliente c;
+    int maior = 0;  // Armazena o maior código encontrado
+
+    // Percorre todos os clientes no arquivo
+    while (fread(&c, sizeof(Cliente), 1, arquivo))
+    {
+        if (c.codigoCliente > maior)
+            maior = c.codigoCliente;  // Atualiza maior código
+    }
+    fclose(arquivo);  // Fecha o arquivo
+    return maior + 1;  // Retorna próximo código
+}
+
+/*
+ * Função: gerarCodigoFuncionario
+ * Objetivo: Gerar código único para novo funcionário
+ * Parâmetros: -
+ * Retorno: int - próximo código disponível
+ */
+int gerarCodigoFuncionario()
+{
+    FILE *arquivo = fopen(ARQ_FUNCIONARIOS, "rb");
+    if (!arquivo)
+        return 1;  // Primeiro código
+
+    Funcionario func;
+    int maior = 0;
+
+    while (fread(&func, sizeof(Funcionario), 1, arquivo))
+    {
+        if (func.codigoFuncionario > maior)
+            maior = func.codigoFuncionario;
+    }
+    fclose(arquivo);
+    return maior + 1;
+}
+
+/*
+ * Função: gerarCodigoEstadia
+ * Objetivo: Gerar código único para nova estadia
+ * Parâmetros: -
+ * Retorno: int - próximo código disponível
+ */
+int gerarCodigoEstadia()
+{
+    FILE *arquivo = fopen(ARQ_ESTADIAS, "rb");
+    if (!arquivo)
+        return 1;  // Primeiro código
+
+    Estadia e;
+    int maior = 0;
+
+    while (fread(&e, sizeof(Estadia), 1, arquivo))
+    {
+        if (e.codigoEstadia > maior)
+            maior = e.codigoEstadia;
+    }
+    fclose(arquivo);
+    return maior + 1;
+}
