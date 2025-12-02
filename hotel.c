@@ -596,7 +596,7 @@ int main()
             cadastrarFuncionario();
             break;
         case 3:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Cadastrar quarto\n");
+            cadastrarQuarto();
             break;
         case 4:
             printf("\n[FUNCAO NAO IMPLEMENTADA] Nova estadia\n");
