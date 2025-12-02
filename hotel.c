@@ -902,13 +902,13 @@ int main()
             mostrarClientes();
             break;
         case 7:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Mostrar funcionarios\n");
+            mostrarFuncionarios();
             break;
         case 8:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Mostrar quartos\n");
+            mostrarQuartos();
             break;
         case 9:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Mostrar estadias\n");
+            mostrarEstadias();
             break;
         case 10:
             printf("\n[FUNCAO NAO IMPLEMENTADA] Pesquisar cliente\n");
