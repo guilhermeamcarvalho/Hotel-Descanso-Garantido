@@ -615,7 +615,65 @@ int lerData(const char *mensagem, Data *data) {
     return 0; // Falha na leitura
 }
 
+// ============================================================
+// FUNÇÃO PARA CÁLCULO DE DIAS ENTRE DATAS
+// ============================================================
 
+/*
+ * Função: diasEntreDatas
+ * Objetivo: Calcular o número de dias entre duas datas
+ *           Usado para calcular diárias de estadia
+ * Parâmetros: e - data de entrada
+ *             s - data de saída
+ * Retorno: int - número de dias, ou -1 se datas inválidas
+ */
+int diasEntreDatas(Data e, Data s)
+{
+    // Primeiro validar ambas as datas
+    if (!validarData(e) || !validarData(s)) {
+        return -1;  // Datas inválidas
+    }
+    
+    // Verificar se a data de saída é posterior à data de entrada
+    if (s.ano < e.ano)
+        return -1;  // Saída em ano anterior à entrada
+    if (s.ano == e.ano && s.mes < e.mes)
+        return -1;  // Mesmo ano, mas mês de saída anterior
+    if (s.ano == e.ano && s.mes == e.mes && s.dia <= e.dia)
+        return -1;  // Mesmo mês/ano, mas dia de saída não posterior
+
+    int dias = 0;  // Acumulador de dias
+
+    // Caso simples: mesmo mês e ano
+    if (e.ano == s.ano && e.mes == s.mes)
+        return s.dia - e.dia;  // Apenas subtrai os dias
+
+    // Dias restantes no mês de entrada
+    dias += diasNoMes(e.mes, e.ano) - e.dia;
+
+    // Meses intermediários entre entrada e saída
+    int mesAtual = e.mes + 1;
+    int anoAtual = e.ano;
+
+    // Percorre meses entre entrada e saída (excluindo mês de entrada e saída)
+    while (anoAtual < s.ano || (anoAtual == s.ano && mesAtual < s.mes))
+    {
+        dias += diasNoMes(mesAtual, anoAtual);  // Adiciona dias do mês
+        mesAtual++;
+
+        // Ajusta ano se passar de dezembro
+        if (mesAtual > 12)
+        {
+            mesAtual = 1;
+            anoAtual++;
+        }
+    }
+
+    // Dias no mês de saída
+    dias += s.dia;
+
+    return dias;  // Retorna total de dias
+}
 
 
 
