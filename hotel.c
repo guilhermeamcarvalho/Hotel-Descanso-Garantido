@@ -470,9 +470,62 @@ void cadastrarFuncionario()
     getchar();
 }
 
-// ATUALIZAÇÃO DO MAIN para usar as novas funções:
-// No switch case 1: cadastrarCliente();
-// No switch case 2: cadastrarFuncionario();
+/*
+ * Função: cadastrarQuarto
+ * Objetivo: Cadastrar um novo quarto no hotel
+ *           Valida número único, capacidade positiva e valor positivo
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void cadastrarQuarto()
+{
+    Quarto q;
+
+    // Valida número do quarto (deve ser positivo)
+    do
+    {
+        printf("\nNumero do quarto: ");
+        scanf("%d", &q.numeroQuarto);
+        if (q.numeroQuarto <= 0)
+            printf("Numero invalido! O numero do quarto deve ser positivo.\n");
+    } while (q.numeroQuarto <= 0);
+
+    // Verifica se quarto com esse número já existe
+    Quarto existente;
+    if (buscarQuarto(q.numeroQuarto, &existente))
+    {
+        printf("Ja existe um quarto com esse numero.\n");
+        return;
+    }
+
+    // Valida capacidade (deve ser maior que zero)
+    do
+    {
+        printf("Capacidade: ");
+        scanf("%d", &q.capacidade);
+        if (q.capacidade <= 0)
+            printf("Capacidade invalida! Deve ser maior que zero.\n");
+    } while (q.capacidade <= 0);
+
+    // Valida valor da diária (deve ser positivo)
+    do
+    {
+        printf("Valor da diaria: ");
+        scanf("%lf", &q.valorDiaria);
+        if (q.valorDiaria <= 0)
+            printf("Valor invalido! A diaria deve ser positiva.\n");
+    } while (q.valorDiaria <= 0);
+
+    q.estaOcupado = 0;  // Novo quarto começa como livre
+
+    // Salva quarto
+    salvarQuartoArquivo(q);
+    printf("\nQuarto cadastrado com sucesso!\n");
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
 
 
 
@@ -481,7 +534,7 @@ void cadastrarFuncionario()
 
 
 // ============================================================
-// FUNÇÃO PRINCIPAL - MENU DO SISTEMA (ESQUELETO INICIAL)
+// FUNÇÃO PRINCIPAL - MENU DO SISTEMA
 // ============================================================
 
 /*
