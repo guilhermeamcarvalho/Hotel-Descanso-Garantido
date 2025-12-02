@@ -675,6 +675,51 @@ int diasEntreDatas(Data e, Data s)
     return dias;  // Retorna total de dias
 }
 
+// ============================================================
+// FUNÇÕES PARA MOSTRAR DADOS (CONTINUAÇÃO)
+// ============================================================
+
+/*
+ * Função: mostrarFuncionarios
+ * Objetivo: Listar todos os funcionários cadastrados
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarFuncionarios()
+{
+    FILE *arquivo = fopen(ARQ_FUNCIONARIOS, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhum funcionario cadastrado.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Funcionario func;
+    int count = 0;
+
+    printf("\n=== LISTA DE FUNCIONaRIOS ===\n");
+    printf("========================================\n");
+    while (fread(&func, sizeof(Funcionario), 1, arquivo))
+    {
+        printf("\nCodigo: %d\n", func.codigoFuncionario);
+        printf("Nome: %s\n", func.nome);
+        printf("Telefone: %s\n", func.telefone);
+        printf("Cargo: %s\n", func.cargo);
+        printf("Salario: R$ %.2f\n", func.salario);
+        printf("-------------------\n");
+        count++;
+    }
+    fclose(arquivo);
+    
+    printf("Total de funcionarios: %d\n", count);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+
 
 
 
