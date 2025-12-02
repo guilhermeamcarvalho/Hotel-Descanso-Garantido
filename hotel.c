@@ -307,6 +307,84 @@ int buscarQuarto(int numero, Quarto *resultado)
     fclose(arquivo);
     return 0;
 }
+// ============================================================
+
+// FUNÇÃO PARA MARCAR QUARTO COMO OCUPADO OU LIVRE
+
+// ============================================================
+
+
+
+/\*
+
+&nbsp;\* Função: quartoOcupado
+
+&nbsp;\* Objetivo: Alterar status de ocupação de um quarto
+
+&nbsp;\* Parâmetros: numero - número do quarto
+
+&nbsp;\*             ocupado - novo status (1 = ocupado, 0 = livre)
+
+&nbsp;\* Retorno: void
+
+&nbsp;\* 
+
+&nbsp;\* Nota: Cria arquivo temporário para atualização, depois substitui o original
+
+&nbsp;\*/
+
+void quartoOcupado(int numero, int ocupado)
+
+{
+
+&nbsp;   // Abre arquivo original para leitura e temporário para escrita
+
+&nbsp;   FILE \*in = fopen(ARQ\_QUARTOS, "rb");
+
+&nbsp;   FILE \*out = fopen("temp.dat", "wb");
+
+
+
+&nbsp;   Quarto q;
+
+&nbsp;   // Lê todos os quartos do arquivo original
+
+&nbsp;   while (fread(\&q, sizeof(Quarto), 1, in))
+
+&nbsp;   {
+
+&nbsp;       // Se é o quarto procurado, atualiza status
+
+&nbsp;       if (q.numeroQuarto == numero)
+
+&nbsp;           q.estaOcupado = ocupado;
+
+
+
+&nbsp;       // Escreve no arquivo temporário (atualizado ou não)
+
+&nbsp;       fwrite(\&q, sizeof(Quarto), 1, out);
+
+&nbsp;   }
+
+
+
+&nbsp;   // Fecha arquivos
+
+&nbsp;   fclose(in);
+
+&nbsp;   fclose(out);
+
+&nbsp;   
+
+&nbsp;   // Substitui arquivo original pelo temporário
+
+&nbsp;   remove(ARQ\_QUARTOS);
+
+&nbsp;   rename("temp.dat", ARQ\_QUARTOS);
+
+}
+
 
 // ============================================================
 // FUNÇÕES PARA GERAR CÓDIGOS AUTOMÁTICOS
