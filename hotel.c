@@ -573,6 +573,49 @@ void mostrarClientes()
     getchar();
 }
 
+// ============================================================
+// FUNÇÃO AUXILIAR PARA LER DATA COM VALIDAÇÃO
+// ============================================================
+
+/*
+ * Função: lerData
+ * Objetivo: Ler uma data do usuário com validação e mensagens de erro
+ * Parâmetros: mensagem - texto a ser exibido para o usuário
+ *             data - ponteiro para estrutura Data onde armazenar o resultado
+ * Retorno: int - 1 se leitura bem sucedida, 0 se falhou após 3 tentativas
+ */
+int lerData(const char *mensagem, Data *data) {
+    int tentativas = 0;  // Contador de tentativas falhas
+    
+    // Permite até 3 tentativas
+    while (tentativas < 3) {
+        printf("%s (DD MM AAAA): ", mensagem);
+        
+        // Ler os três valores (dia, mês, ano)
+        if (scanf("%d %d %d", &data->dia, &data->mes, &data->ano) != 3) {
+            printf("Formato invalido! Digite dia, mes e ano separados por espacos.\n");
+            limparEntrada();  // Limpa buffer para próxima tentativa
+            tentativas++;
+            continue;
+        }
+        
+        // Validar a data usando a função validarData
+        if (!validarData(*data)) {
+            printf("Data invalida! Verifique se o dia, mes e ano estao corretos.\n");
+            printf("Exemplo: 25 12 2024 para 25 de dezembro de 2024.\n");
+            tentativas++;
+            continue;
+        }
+        
+        return 1; // Data válida lida com sucesso
+    }
+    
+    // Se chegou aqui, falhou após 3 tentativas
+    printf("Muitas tentativas invalidas. Voltando ao menu.\n");
+    return 0; // Falha na leitura
+}
+
+
 
 
 
