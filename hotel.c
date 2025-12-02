@@ -527,7 +527,51 @@ void cadastrarQuarto()
     getchar();
 }
 
+// ============================================================
+// FUNÇÕES PARA MOSTRAR DADOS (LISTAGENS)
+// ============================================================
 
+/*
+ * Função: mostrarClientes
+ * Objetivo: Listar todos os clientes cadastrados no sistema
+ *           Inclui contador total
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarClientes()
+{
+    FILE *arquivo = fopen(ARQ_CLIENTES, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhum cliente cadastrado.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Cliente c;
+    int count = 0;  // Contador de clientes
+
+    printf("\n=== LISTA DE CLIENTES ===\n");
+    printf("========================================\n");
+    
+    // Lê e exibe cada cliente
+    while (fread(&c, sizeof(Cliente), 1, arquivo))
+    {
+        printf("\nCodigo: %d\n", c.codigoCliente);
+        printf("Nome: %s\n", c.nome);
+        printf("Endereco: %s\n", c.endereco);
+        printf("Telefone: %s\n", c.telefone);
+        printf("-------------------\n");
+        count++;
+    }
+    fclose(arquivo);
+    
+    printf("Total de clientes: %d\n", count);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
 
 
 
@@ -605,7 +649,7 @@ int main()
             printf("\n[FUNCAO NAO IMPLEMENTADA] Encerrar estadia\n");
             break;
         case 6:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Mostrar clientes\n");
+            mostrarClientes();
             break;
         case 7:
             printf("\n[FUNCAO NAO IMPLEMENTADA] Mostrar funcionarios\n");

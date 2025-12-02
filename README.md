@@ -166,12 +166,12 @@ Executar programa:
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `buscarCliente()` retorna 1 se encontra cliente
-- [ ] `buscarCliente()` retorna 0 se não encontra
-- [ ] `buscarQuarto()` funciona similarmente
-- [ ] `cadastrarQuarto()` valida número único
-- [ ] `cadastrarQuarto()` valida capacidade > 0
-- [ ] `cadastrarQuarto()` valida valor diária > 0
+- [✅] `buscarCliente()` retorna 1 se encontra cliente
+- [✅] `buscarCliente()` retorna 0 se não encontra
+- [✅] `buscarQuarto()` funciona similarmente
+- [✅] `cadastrarQuarto()` valida número único
+- [✅] `cadastrarQuarto()` valida capacidade > 0
+- [✅] `cadastrarQuarto()` valida valor diária > 0
 - [ ] `mostrarClientes()` lista todos os clientes
 - [ ] `mostrarClientes()` mostra contador
 - [ ] Menu opção 3 funciona completamente
