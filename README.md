@@ -28,7 +28,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 ## **📝 ETAPA 1: ESTRUTURA BÁSICA E MENU**
 
 ### **Responsável: GUILHERME**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -70,7 +70,7 @@ echo $?  # Deve retornar 0
 ## **📝 ETAPA 2: FUNÇÕES DE DATA E ARQUIVO**
 
 ### **Responsável: RAFAEL**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -84,14 +84,14 @@ echo $?  # Deve retornar 0
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `diasFevereiro(2020)` retorna 29 (bissexto)
-- [ ] `diasFevereiro(2021)` retorna 28 (não bissexto)
-- [ ] `diasNoMes(2, 2020)` retorna 29
-- [ ] `diasNoMes(2, 2021)` retorna 28
-- [ ] `diasNoMes(4, 2024)` retorna 30
-- [ ] `validarData({31, 12, 2024})` retorna 1 (válida)
-- [ ] `validarData({31, 4, 2024})` retorna 0 (inválida)
-- [ ] Funções de salvar não causam erros de compilação
+- [✅ ] `diasFevereiro(2020)` retorna 29 (bissexto)
+- [✅ ] `diasFevereiro(2021)` retorna 28 (não bissexto)
+- [✅ ] `diasNoMes(2, 2020)` retorna 29
+- [✅ ] `diasNoMes(2, 2021)` retorna 28
+- [✅ ] `diasNoMes(4, 2024)` retorna 30
+- [✅ ] `validarData({31, 12, 2024})` retorna 1 (válida)
+- [✅ ] `validarData({31, 4, 2024})` retorna 0 (inválida)
+- [✅ ] Funções de salvar não causam erros de compilação
 
 ### **🧪 TESTES A REALIZAR:**
 ```c
@@ -111,7 +111,7 @@ printf("Teste 2: %d (esperado: 0)\n", validarData(data2));
 ## **📝 ETAPA 3: CADASTROS BÁSICOS**
 
 ### **Responsável: SAMUEL**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -124,15 +124,15 @@ printf("Teste 2: %d (esperado: 0)\n", validarData(data2));
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `gerarCodigoCliente()` retorna 1 se arquivo não existe
-- [ ] `gerarCodigoCliente()` incrementa corretamente
-- [ ] `cadastrarCliente()` coleta todos os dados
-- [ ] `cadastrarCliente()` salva no arquivo
-- [ ] `cadastrarFuncionario()` valida salário positivo
-- [ ] Menu opção 1 funciona completamente
-- [ ] Menu opção 2 funciona completamente
-- [ ] Arquivo `clientes.bin` é criado ao cadastrar
-- [ ] Arquivo `funcionarios.bin` é criado ao cadastrar
+- [✅ ] `gerarCodigoCliente()` retorna 1 se arquivo não existe
+- [✅ ] `gerarCodigoCliente()` incrementa corretamente
+- [✅ ] `cadastrarCliente()` coleta todos os dados
+- [✅ ] `cadastrarCliente()` salva no arquivo
+- [✅ ] `cadastrarFuncionario()` valida salário positivo
+- [✅ ] Menu opção 1 funciona completamente
+- [✅ ] Menu opção 2 funciona completamente
+- [✅ ] Arquivo `clientes.bin` é criado ao cadastrar
+- [✅ ] Arquivo `funcionarios.bin` é criado ao cadastrar
 
 ### **🧪 TESTES A REALIZAR:**
 ```
