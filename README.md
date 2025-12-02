@@ -16,7 +16,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 | 1. Estrutura Básica e Menu | Guilherme | ✅ Concluída |
 | 2. Funções de Data e Arquivo | Rafael | ✅ Concluída |
 | 3. Cadastros Básicos | Samuel | ✅ Concluída |
-| 4. Busca e Quartos | Guilherme | ⏳ Pendente |
+| 4. Busca e Quartos | Guilherme | ✅ Concluída |
 | 5. Datas e Listagens | Rafael | ⏳ Pendente |
 | 6. Sistema de Estadias | Samuel | ⏳ Pendente |
 | 7. Pesquisas Avançadas | Guilherme | ⏳ Pendente |
@@ -154,7 +154,7 @@ Executar programa:
 ## **📝 ETAPA 4: BUSCA E QUARTOS**
 
 ### **Responsável: GUILHERME**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -172,10 +172,10 @@ Executar programa:
 - [✅] `cadastrarQuarto()` valida número único
 - [✅] `cadastrarQuarto()` valida capacidade > 0
 - [✅] `cadastrarQuarto()` valida valor diária > 0
-- [ ] `mostrarClientes()` lista todos os clientes
-- [ ] `mostrarClientes()` mostra contador
-- [ ] Menu opção 3 funciona completamente
-- [ ] Menu opção 6 funciona completamente
+- [✅] `mostrarClientes()` lista todos os clientes
+- [✅] `mostrarClientes()` mostra contador
+- [✅] Menu opção 3 funciona completamente
+- [✅] Menu opção 6 funciona completamente
 
 ### **🧪 TESTES A REALIZAR:**
 ```
@@ -395,18 +395,18 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ### **Progresso Geral:** 0% (0/9 etapas concluídas)
 
 ### **Progresso por Integrante:**
-- **Guilherme:** 0/3 tarefas (0%)
-  - ETAPA 1: ⏳ Pendente
-  - ETAPA 4: ⏳ Pendente  
+- **Guilherme:** 2/3 tarefas (66%)
+  - ETAPA 1: ✅ Concluída
+  - ETAPA 4: ✅ Concluída  
   - ETAPA 7: ⏳ Pendente
 
-- **Rafael:** 0/3 tarefas (0%)
-  - ETAPA 2: ⏳ Pendente
+- **Rafael:** 1/3 tarefas (33%)
+  - ETAPA 2: ✅ Concluída
   - ETAPA 5: ⏳ Pendente
   - ETAPA 8: ⏳ Pendente
 
-- **Samuel:** 0/3 tarefas (0%)
-  - ETAPA 3: ⏳ Pendente
+- **Samuel:** 1/3 tarefas (33%)
+  - ETAPA 3: ✅ Concluída
   - ETAPA 6: ⏳ Pendente
   - ETAPA 9: ⏳ Pendente
 
