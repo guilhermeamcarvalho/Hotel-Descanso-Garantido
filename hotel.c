@@ -770,6 +770,61 @@ void mostrarQuartos()
     getchar();
 }
 
+/*
+ * Função: mostrarEstadias
+ * Objetivo: Listar todas as estadias registradas
+ *           Inclui status (ativa/finalizada) e estatísticas
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarEstadias()
+{
+    FILE *arquivo = fopen(ARQ_ESTADIAS, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhuma estadia registrada.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Estadia e;
+    int count = 0;          // Total de estadias
+    int ativas = 0;         // Estadias ativas
+    int finalizadas = 0;    // Estadias finalizadas
+
+    printf("\n=== LISTA DE ESTADIAS ===\n");
+    printf("========================================\n");
+    while (fread(&e, sizeof(Estadia), 1, arquivo))
+    {
+        printf("\nCodigo da estadia: %d\n", e.codigoEstadia);
+        printf("Codigo do cliente: %d\n", e.codigoCliente);
+        printf("Numero do quarto: %d\n", e.numeroQuarto);
+        printf("Data de entrada: %02d/%02d/%04d\n", e.dataEntrada.dia, e.dataEntrada.mes, e.dataEntrada.ano);
+        printf("Data de saida: %02d/%02d/%04d\n", e.dataSaida.dia, e.dataSaida.mes, e.dataSaida.ano);
+        printf("Quantidade de diarias: %d\n", e.quantidadeDiarias);
+        printf("Status: %s\n", e.estadiaAtiva ? "ATIVA" : "FINALIZADA");
+        printf("-------------------\n");
+        
+        count++;
+        if (e.estadiaAtiva)
+            ativas++;
+        else
+            finalizadas++;
+    }
+    fclose(arquivo);
+    
+    // Mostra estatísticas
+    printf("RESUMO:\n");
+    printf("Total de estadias: %d\n", count);
+    printf("Estadias ativas: %d\n", ativas);
+    printf("Estadias finalizadas: %d\n", finalizadas);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+
 
 
 // ============================================================
