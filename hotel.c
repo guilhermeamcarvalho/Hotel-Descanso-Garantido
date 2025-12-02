@@ -719,7 +719,56 @@ void mostrarFuncionarios()
     getchar();
 }
 
+/*
+ * Função: mostrarQuartos
+ * Objetivo: Listar todos os quartos com status de ocupação
+ *           Inclui estatísticas: total, ocupados e livres
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarQuartos()
+{
+    FILE *arquivo = fopen(ARQ_QUARTOS, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhum quarto cadastrado.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
 
+    Quarto q;
+    int count = 0;      // Total de quartos
+    int ocupados = 0;   // Quartos ocupados
+    int livres = 0;     // Quartos livres
+
+    printf("\n=== LISTA DE QUARTOS ===\n");
+    printf("========================================\n");
+    while (fread(&q, sizeof(Quarto), 1, arquivo))
+    {
+        printf("\nNumero: %d\n", q.numeroQuarto);
+        printf("Capacidade: %d hospedes\n", q.capacidade);
+        printf("Valor da diaria: R$ %.2f\n", q.valorDiaria);
+        printf("Status: %s\n", q.estaOcupado ? "OCUPADO" : "LIVRE");
+        printf("-------------------\n");
+        
+        count++;
+        if (q.estaOcupado)
+            ocupados++;
+        else
+            livres++;
+    }
+    fclose(arquivo);
+    
+    // Mostra estatísticas
+    printf("RESUMO:\n");
+    printf("Total de quartos: %d\n", count);
+    printf("Quartos ocupados: %d\n", ocupados);
+    printf("Quartos livres: %d\n", livres);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
 
 
 
