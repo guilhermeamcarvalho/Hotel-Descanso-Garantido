@@ -19,7 +19,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 | 4. Busca e Quartos | Guilherme | ✅ Concluída |
 | 5. Datas e Listagens | Rafael | ✅ Concluída |
 | 6. Sistema de Estadias | Samuel | ✅ Concluída |
-| 7. Pesquisas Avançadas | Guilherme | ⏳ Pendente |
+| 7. Pesquisas Avançadas | Guilherme | ✅ Concluída |
 | 8. Fidelidade e Relatórios | Rafael | ⏳ Pendente |
 | 9. Testes Finais | Samuel | ⏳ Pendente |
 ---
@@ -194,7 +194,7 @@ Executar programa:
 ## **📝 ETAPA 5: DATAS E LISTAGENS**
 
 ### **Responsável: RAFAEL**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -207,15 +207,15 @@ Executar programa:
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `lerData()` valida formato correto (DD MM AAAA)
-- [ ] `lerData()` permite até 3 tentativas
-- [ ] `diasEntreDatas()` calcula corretamente datas no mesmo mês
-- [ ] `diasEntreDatas()` calcula corretamente datas em meses diferentes
-- [ ] `mostrarFuncionarios()` lista com formatação
-- [ ] `mostrarQuartos()` mostra status (OCUPADO/LIVRE)
-- [ ] `mostrarQuartos()` mostra estatísticas
-- [ ] `mostrarEstadias()` mostra datas formatadas
-- [ ] Menu opções 7, 8, 9 funcionam
+- [✅] `lerData()` valida formato correto (DD MM AAAA)
+- [✅] `lerData()` permite até 3 tentativas
+- [✅] `diasEntreDatas()` calcula corretamente datas no mesmo mês
+- [✅] `diasEntreDatas()` calcula corretamente datas em meses diferentes
+- [✅] `mostrarFuncionarios()` lista com formatação
+- [✅] `mostrarQuartos()` mostra status (OCUPADO/LIVRE)
+- [✅] `mostrarQuartos()` mostra estatísticas
+- [✅] `mostrarEstadias()` mostra datas formatadas
+- [✅] Menu opções 7, 8, 9 funcionam
 
 ### **🧪 TESTES A REALIZAR:**
 ```c
@@ -235,7 +235,7 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ## **📝 ETAPA 6: SISTEMA DE ESTADIAS**
 
 ### **Responsável: SAMUEL**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -246,16 +246,16 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `quartoOcupado()` atualiza status corretamente
-- [ ] `novaEstadia()` valida cliente existente
-- [ ] `novaEstadia()` mostra apenas quartos disponíveis
-- [ ] `novaEstadia()` calcula diárias automaticamente
-- [ ] `novaEstadia()` marca quarto como ocupado
-- [ ] `encerrarEstadia()` calcula valor total
-- [ ] `encerrarEstadia()` marca estadia como finalizada
-- [ ] `encerrarEstadia()` libera quarto
-- [ ] Menu opção 4 funciona completamente
-- [ ] Menu opção 5 funciona completamente
+- [✅] `quartoOcupado()` atualiza status corretamente
+- [✅] `novaEstadia()` valida cliente existente
+- [✅] `novaEstadia()` mostra apenas quartos disponíveis
+- [✅] `novaEstadia()` calcula diárias automaticamente
+- [✅] `novaEstadia()` marca quarto como ocupado
+- [✅] `encerrarEstadia()` calcula valor total
+- [✅] `encerrarEstadia()` marca estadia como finalizada
+- [✅] `encerrarEstadia()` libera quarto
+- [✅] Menu opção 4 funciona completamente
+- [✅] Menu opção 5 funciona completamente
 
 ### **🧪 TESTES A REALIZAR:**
 ```
@@ -276,7 +276,7 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ## **📝 ETAPA 7: PESQUISAS AVANÇADAS**
 
 ### **Responsável: GUILHERME**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -286,14 +286,14 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `pesquisarCliente()` busca por código
-- [ ] `pesquisarCliente()` busca por nome (parcial)
-- [ ] `pesquisarCliente()` mostra mensagem se não encontrar
-- [ ] `pesquisarFuncionario()` busca por código
-- [ ] `pesquisarFuncionario()` busca por nome (parcial)
-- [ ] Ambas funções mostram resultados formatados
-- [ ] Menu opção 10 funciona completamente
-- [ ] Menu opção 11 funciona completamente
+- [✅] `pesquisarCliente()` busca por código
+- [✅] `pesquisarCliente()` busca por nome (parcial)
+- [✅] `pesquisarCliente()` mostra mensagem se não encontrar
+- [✅] `pesquisarFuncionario()` busca por código
+- [✅] `pesquisarFuncionario()` busca por nome (parcial)
+- [✅] Ambas funções mostram resultados formatados
+- [✅] Menu opção 10 funciona completamente
+- [✅] Menu opção 11 funciona completamente
 
 ### **🧪 TESTES A REALIZAR:**
 ```
@@ -392,22 +392,22 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 
 ## **📊 CONTROLE DE PROGRESSO**
 
-### **Progresso Geral:** 0% (0/9 etapas concluídas)
+### **Progresso Geral:** 77% (7/9 etapas concluídas)
 
 ### **Progresso por Integrante:**
-- **Guilherme:** 2/3 tarefas (66%)
+- **Guilherme:** 3/3 tarefas (100%)
   - ETAPA 1: ✅ Concluída
   - ETAPA 4: ✅ Concluída  
-  - ETAPA 7: ⏳ Pendente
+  - ETAPA 7: ✅ Concluída
 
-- **Rafael:** 1/3 tarefas (33%)
+- **Rafael:** 2/3 tarefas (66%)
   - ETAPA 2: ✅ Concluída
-  - ETAPA 5: ⏳ Pendente
+  - ETAPA 5: ✅ Concluída
   - ETAPA 8: ⏳ Pendente
 
-- **Samuel:** 1/3 tarefas (33%)
+- **Samuel:** 2/3 tarefas (66%)
   - ETAPA 3: ✅ Concluída
-  - ETAPA 6: ⏳ Pendente
+  - ETAPA 6: ✅ Concluída
   - ETAPA 9: ⏳ Pendente
 
 ---
