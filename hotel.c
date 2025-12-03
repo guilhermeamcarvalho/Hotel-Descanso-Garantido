@@ -341,15 +341,15 @@ void quartoOcupado(int numero, int ocupado)
 
     // Abre arquivo original para leitura e temporário para escrita
 
-    FILE \*in = fopen(ARQ\_QUARTOS, "rb");
+    FILE *in = fopen(ARQ_QUARTOS, "rb");
 
-    FILE \*out = fopen("temp.dat", "wb");
+    FILE *out = fopen("temp.dat", "wb");
 
     Quarto q;
 
     // Lê todos os quartos do arquivo original
 
-    while (fread(\& q, sizeof(Quarto), 1, in))
+    while (fread(& q, sizeof(Quarto), 1, in))
 
     {
 
@@ -361,7 +361,7 @@ void quartoOcupado(int numero, int ocupado)
 
         // Escreve no arquivo temporário (atualizado ou não)
 
-        fwrite(\& q, sizeof(Quarto), 1, out);
+        fwrite(& q, sizeof(Quarto), 1, out);
     }
 
     // Fecha arquivos
@@ -372,9 +372,9 @@ void quartoOcupado(int numero, int ocupado)
 
     // Substitui arquivo original pelo temporário
 
-    remove(ARQ\_QUARTOS);
+    remove(ARQ_QUARTOS);
 
-    rename("temp.dat", ARQ\_QUARTOS);
+    rename("temp.dat", ARQ_QUARTOS);
 }
 // ============================================================
 // FUNÇÕES PARA PESQUISA DE CLIENTES
@@ -637,342 +637,6 @@ int gerarCodigoEstadia()
     }
     fclose(arquivo);
     return maior + 1;
-}
-
-// ============================================================
-// FUNÇÕES DE CADASTRO
-// ============================================================
-
-/*
- * Função: cadastrarCliente
- * Objetivo: Cadastrar um novo cliente no sistema
- *           Coleta informações via console e salva em arquivo
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void cadastrarCliente()
-{
-    Cliente c;
-    c.codigoCliente = gerarCodigoCliente(); // Gera código automaticamente
-
-    // Limpa buffer e coleta dados do cliente
-    limparEntrada();
-    printf("\nNome completo: ");
-    fgets(c.nome, 50, stdin);
-    c.nome[strcspn(c.nome, "\n")] = 0; // Remove \n do final
-
-    printf("Endereco: ");
-    fgets(c.endereco, 50, stdin);
-    c.endereco[strcspn(c.endereco, "\n")] = 0;
-
-    printf("Telefone: ");
-    fgets(c.telefone, 20, stdin);
-    c.telefone[strcspn(c.telefone, "\n")] = 0;
-
-    // Salva cliente no arquivo
-    salvarClienteArquivo(c);
-    printf("\nCliente cadastrado com sucesso! (Codigo %d)\n", c.codigoCliente);
-
-    // Pausa antes de voltar ao menu
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-
-/*
- * Função: cadastrarFuncionario
- * Objetivo: Cadastrar um novo funcionário no sistema
- *           Inclui validação de salário (não pode ser negativo)
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void cadastrarFuncionario()
-{
-    Funcionario arquivo;
-    arquivo.codigoFuncionario = gerarCodigoFuncionario();
-
-    // Coleta dados básicos
-    limparEntrada();
-    printf("\nNome completo: ");
-    fgets(arquivo.nome, 50, stdin);
-    arquivo.nome[strcspn(arquivo.nome, "\n")] = 0;
-
-    printf("Telefone: ");
-    fgets(arquivo.telefone, 20, stdin);
-    arquivo.telefone[strcspn(arquivo.telefone, "\n")] = 0;
-
-    printf("Cargo: ");
-    fgets(arquivo.cargo, 30, stdin);
-    arquivo.cargo[strcspn(arquivo.cargo, "\n")] = 0;
-
-    // Validação de salário (deve ser positivo)
-    do
-    {
-        printf("Salario: ");
-        scanf("%lf", &arquivo.salario);
-        if (arquivo.salario < 0)
-            printf("Valor invalido! O salario nao pode ser negativo.\n");
-    } while (arquivo.salario < 0);
-
-    // Salva funcionário
-    salvarFuncionarioArquivo(arquivo);
-    printf("\nFuncionario cadastrado! (Codigo %d)\n", arquivo.codigoFuncionario);
-
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-
-/*
- * Função: cadastrarQuarto
- * Objetivo: Cadastrar um novo quarto no hotel
- *           Valida número único, capacidade positiva e valor positivo
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void cadastrarQuarto()
-{
-    Quarto q;
-
-    // Valida número do quarto (deve ser positivo)
-    do
-    {
-        printf("\nNumero do quarto: ");
-        scanf("%d", &q.numeroQuarto);
-        if (q.numeroQuarto <= 0)
-            printf("Numero invalido! O numero do quarto deve ser positivo.\n");
-    } while (q.numeroQuarto <= 0);
-
-    // Verifica se quarto com esse número já existe
-    Quarto existente;
-    if (buscarQuarto(q.numeroQuarto, &existente))
-    {
-        printf("Ja existe um quarto com esse numero.\n");
-        return;
-    }
-
-    // Valida capacidade (deve ser maior que zero)
-    do
-    {
-        printf("Capacidade: ");
-        scanf("%d", &q.capacidade);
-        if (q.capacidade <= 0)
-            printf("Capacidade invalida! Deve ser maior que zero.\n");
-    } while (q.capacidade <= 0);
-
-    // Valida valor da diária (deve ser positivo)
-    do
-    {
-        printf("Valor da diaria: ");
-        scanf("%lf", &q.valorDiaria);
-        if (q.valorDiaria <= 0)
-            printf("Valor invalido! A diaria deve ser positiva.\n");
-    } while (q.valorDiaria <= 0);
-
-    q.estaOcupado = 0; // Novo quarto começa como livre
-
-    // Salva quarto
-    salvarQuartoArquivo(q);
-    printf("\nQuarto cadastrado com sucesso!\n");
-
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-// ============================================================
-// FUNÇÃO PARA REGISTRAR NOVA ESTADIA
-// ============================================================
-
-/*
- * Função: novaEstadia
- * Objetivo: Registrar uma nova estadia/hospedagem
- *           Processo completo: valida cliente, mostra quartos disponíveis,
- *           valida datas, calcula diárias e atualiza status
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void novaEstadia()
-{
-    Estadia e;
-    e.codigoEstadia = gerarCodigoEstadia(); // Gera código automático
-
-    // Valida código do cliente
-    do
-    {
-        printf("Codigo do cliente: ");
-        scanf("%d", &e.codigoCliente);
-        if (e.codigoCliente <= 0)
-            printf("Codigo invalido! Deve ser positivo.\n");
-    } while (e.codigoCliente <= 0);
-
-    // Verifica se cliente existe
-    Cliente ctmp;
-    if (!buscarCliente(e.codigoCliente, &ctmp))
-    {
-        printf("Cliente nao encontrado!\n");
-        return;
-    }
-
-    // Valida quantidade de hóspedes
-    int hospedes;
-    do
-    {
-        printf("Quantidade de hospedes: ");
-        scanf("%d", &hospedes);
-        if (hospedes <= 0)
-            printf("Quantidade invalida! Deve ser maior que zero.\n");
-    } while (hospedes <= 0);
-
-    // Mostra quartos disponíveis compatíveis com a capacidade
-    FILE *arquivo = fopen(ARQ_QUARTOS, "rb");
-    Quarto q;
-    int encontrou = 0;
-
-    printf("\nQuartos disponiveis para %d hospede(s):\n", hospedes);
-
-    while (fread(&q, sizeof(Quarto), 1, arquivo))
-    {
-        if (!q.estaOcupado && q.capacidade >= hospedes)
-        {
-            printf("Quarto %d | Capacidade %d | Diaria: R$ %.2f\n",
-                   q.numeroQuarto, q.capacidade, q.valorDiaria);
-            encontrou = 1;
-        }
-    }
-    fclose(arquivo);
-
-    if (!encontrou)
-    {
-        printf("\nNenhum quarto disponivel com essa capacidade.\n");
-        return;
-    }
-
-    // Solicita número do quarto desejado
-    do
-    {
-        printf("\nDigite o numero do quarto desejado: ");
-        scanf("%d", &e.numeroQuarto);
-        if (e.numeroQuarto <= 0)
-            printf("Numero invalido! Deve ser positivo.\n");
-    } while (e.numeroQuarto <= 0);
-
-    // Valida escolha do quarto
-    Quarto escolhido;
-    if (!buscarQuarto(e.numeroQuarto, &escolhido) ||
-        escolhido.estaOcupado ||
-        escolhido.capacidade < hospedes)
-    {
-        printf("Quarto invalido ou indisponivel!\n");
-        return;
-    }
-
-    // Lê data de entrada
-    if (!lerData("Data de entrada", &e.dataEntrada))
-    {
-        return;
-    }
-
-    // Lê data de saída
-    if (!lerData("Data de saida", &e.dataSaida))
-    {
-        return;
-    }
-
-    // Calcula quantidade de diárias
-    e.quantidadeDiarias = diasEntreDatas(e.dataEntrada, e.dataSaida);
-    if (e.quantidadeDiarias <= 0)
-    {
-        printf("Datas invalidas! A data de saida deve ser posterior a data de entrada.\n");
-        return;
-    }
-
-    e.estadiaAtiva = 1;
-
-    // Salva estadia e marca quarto como ocupado
-    salvarEstadiaArquivo(e);
-    quartoOcupado(e.numeroQuarto, 1);
-
-    // Resumo
-    printf("\nEstadia registrada com sucesso!\n");
-    printf("Codigo da estadia: %d\n", e.codigoEstadia);
-    printf("Total de diarias: %d\n", e.quantidadeDiarias);
-
-    double valorTotal = e.quantidadeDiarias * escolhido.valorDiaria;
-    printf("Valor total estimado: R$ %.2f\n", valorTotal);
-
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-
-// ============================================================
-// FUNÇÃO PARA ENCERRAR ESTADIA
-// ============================================================
-
-/*
- * Função: encerrarEstadia
- * Objetivo: Encerrar uma estadia ativa
- *           Calcula valor total, marca estadia como finalizada
- *           e libera o quarto para nova ocupação
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void encerrarEstadia()
-{
-    int codigo;
-
-    // Valida código da estadia
-    do
-    {
-        printf("Codigo da estadia: ");
-        scanf("%d", &codigo);
-        if (codigo <= 0)
-            printf("Codigo invalido! Deve ser positivo.\n");
-    } while (codigo <= 0);
-
-    // Abre arquivos
-    FILE *in = fopen(ARQ_ESTADIAS, "rb");
-    FILE *out = fopen("temp.dat", "wb");
-
-    Estadia e;
-    int achou = 0;
-
-    // Processa todas as estadias
-    while (fread(&e, sizeof(Estadia), 1, in))
-    {
-        if (e.codigoEstadia == codigo && e.estadiaAtiva)
-        {
-            // Obtém informações do quarto
-            Quarto q;
-            buscarQuarto(e.numeroQuarto, &q);
-
-            double total = e.quantidadeDiarias * q.valorDiaria;
-
-            printf("\nValor total da estadia: R$ %.2f\n", total);
-
-            e.estadiaAtiva = 0;               // Finaliza estadia
-            quartoOcupado(e.numeroQuarto, 0); // Libera o quarto
-            achou = 1;
-        }
-
-        fwrite(&e, sizeof(Estadia), 1, out); // Grava no arquivo temporário
-    }
-
-    // Fecha e substitui arquivo original
-    fclose(in);
-    fclose(out);
-    remove(ARQ_ESTADIAS);
-    rename("temp.dat", ARQ_ESTADIAS);
-
-    // Feedback
-    if (!achou)
-        printf("Estadia nao encontrada.\n");
-    else
-        printf("Estadia encerrada!\n");
-
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
 }
 
 // ============================================================
@@ -1619,6 +1283,341 @@ void calcularPontosFidelidade()
     }
     
     printf("\nPressione ENTER para voltar ao menu...");
+    getchar();
+}
+// ============================================================
+// FUNÇÕES DE CADASTRO
+// ============================================================
+
+/*
+ * Função: cadastrarCliente
+ * Objetivo: Cadastrar um novo cliente no sistema
+ *           Coleta informações via console e salva em arquivo
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void cadastrarCliente()
+{
+    Cliente c;
+    c.codigoCliente = gerarCodigoCliente(); // Gera código automaticamente
+
+    // Limpa buffer e coleta dados do cliente
+    limparEntrada();
+    printf("\nNome completo: ");
+    fgets(c.nome, 50, stdin);
+    c.nome[strcspn(c.nome, "\n")] = 0; // Remove \n do final
+
+    printf("Endereco: ");
+    fgets(c.endereco, 50, stdin);
+    c.endereco[strcspn(c.endereco, "\n")] = 0;
+
+    printf("Telefone: ");
+    fgets(c.telefone, 20, stdin);
+    c.telefone[strcspn(c.telefone, "\n")] = 0;
+
+    // Salva cliente no arquivo
+    salvarClienteArquivo(c);
+    printf("\nCliente cadastrado com sucesso! (Codigo %d)\n", c.codigoCliente);
+
+    // Pausa antes de voltar ao menu
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+/*
+ * Função: cadastrarFuncionario
+ * Objetivo: Cadastrar um novo funcionário no sistema
+ *           Inclui validação de salário (não pode ser negativo)
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void cadastrarFuncionario()
+{
+    Funcionario arquivo;
+    arquivo.codigoFuncionario = gerarCodigoFuncionario();
+
+    // Coleta dados básicos
+    limparEntrada();
+    printf("\nNome completo: ");
+    fgets(arquivo.nome, 50, stdin);
+    arquivo.nome[strcspn(arquivo.nome, "\n")] = 0;
+
+    printf("Telefone: ");
+    fgets(arquivo.telefone, 20, stdin);
+    arquivo.telefone[strcspn(arquivo.telefone, "\n")] = 0;
+
+    printf("Cargo: ");
+    fgets(arquivo.cargo, 30, stdin);
+    arquivo.cargo[strcspn(arquivo.cargo, "\n")] = 0;
+
+    // Validação de salário (deve ser positivo)
+    do
+    {
+        printf("Salario: ");
+        scanf("%lf", &arquivo.salario);
+        if (arquivo.salario < 0)
+            printf("Valor invalido! O salario nao pode ser negativo.\n");
+    } while (arquivo.salario < 0);
+
+    // Salva funcionário
+    salvarFuncionarioArquivo(arquivo);
+    printf("\nFuncionario cadastrado! (Codigo %d)\n", arquivo.codigoFuncionario);
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+/*
+ * Função: cadastrarQuarto
+ * Objetivo: Cadastrar um novo quarto no hotel
+ *           Valida número único, capacidade positiva e valor positivo
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void cadastrarQuarto()
+{
+    Quarto q;
+
+    // Valida número do quarto (deve ser positivo)
+    do
+    {
+        printf("\nNumero do quarto: ");
+        scanf("%d", &q.numeroQuarto);
+        if (q.numeroQuarto <= 0)
+            printf("Numero invalido! O numero do quarto deve ser positivo.\n");
+    } while (q.numeroQuarto <= 0);
+
+    // Verifica se quarto com esse número já existe
+    Quarto existente;
+    if (buscarQuarto(q.numeroQuarto, &existente))
+    {
+        printf("Ja existe um quarto com esse numero.\n");
+        return;
+    }
+
+    // Valida capacidade (deve ser maior que zero)
+    do
+    {
+        printf("Capacidade: ");
+        scanf("%d", &q.capacidade);
+        if (q.capacidade <= 0)
+            printf("Capacidade invalida! Deve ser maior que zero.\n");
+    } while (q.capacidade <= 0);
+
+    // Valida valor da diária (deve ser positivo)
+    do
+    {
+        printf("Valor da diaria: ");
+        scanf("%lf", &q.valorDiaria);
+        if (q.valorDiaria <= 0)
+            printf("Valor invalido! A diaria deve ser positiva.\n");
+    } while (q.valorDiaria <= 0);
+
+    q.estaOcupado = 0; // Novo quarto começa como livre
+
+    // Salva quarto
+    salvarQuartoArquivo(q);
+    printf("\nQuarto cadastrado com sucesso!\n");
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+// ============================================================
+// FUNÇÃO PARA REGISTRAR NOVA ESTADIA
+// ============================================================
+
+/*
+ * Função: novaEstadia
+ * Objetivo: Registrar uma nova estadia/hospedagem
+ *           Processo completo: valida cliente, mostra quartos disponíveis,
+ *           valida datas, calcula diárias e atualiza status
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void novaEstadia()
+{
+    Estadia e;
+    e.codigoEstadia = gerarCodigoEstadia(); // Gera código automático
+
+    // Valida código do cliente
+    do
+    {
+        printf("Codigo do cliente: ");
+        scanf("%d", &e.codigoCliente);
+        if (e.codigoCliente <= 0)
+            printf("Codigo invalido! Deve ser positivo.\n");
+    } while (e.codigoCliente <= 0);
+
+    // Verifica se cliente existe
+    Cliente ctmp;
+    if (!buscarCliente(e.codigoCliente, &ctmp))
+    {
+        printf("Cliente nao encontrado!\n");
+        return;
+    }
+
+    // Valida quantidade de hóspedes
+    int hospedes;
+    do
+    {
+        printf("Quantidade de hospedes: ");
+        scanf("%d", &hospedes);
+        if (hospedes <= 0)
+            printf("Quantidade invalida! Deve ser maior que zero.\n");
+    } while (hospedes <= 0);
+
+    // Mostra quartos disponíveis compatíveis com a capacidade
+    FILE *arquivo = fopen(ARQ_QUARTOS, "rb");
+    Quarto q;
+    int encontrou = 0;
+
+    printf("\nQuartos disponiveis para %d hospede(s):\n", hospedes);
+
+    while (fread(&q, sizeof(Quarto), 1, arquivo))
+    {
+        if (!q.estaOcupado && q.capacidade >= hospedes)
+        {
+            printf("Quarto %d | Capacidade %d | Diaria: R$ %.2f\n",
+                   q.numeroQuarto, q.capacidade, q.valorDiaria);
+            encontrou = 1;
+        }
+    }
+    fclose(arquivo);
+
+    if (!encontrou)
+    {
+        printf("\nNenhum quarto disponivel com essa capacidade.\n");
+        return;
+    }
+
+    // Solicita número do quarto desejado
+    do
+    {
+        printf("\nDigite o numero do quarto desejado: ");
+        scanf("%d", &e.numeroQuarto);
+        if (e.numeroQuarto <= 0)
+            printf("Numero invalido! Deve ser positivo.\n");
+    } while (e.numeroQuarto <= 0);
+
+    // Valida escolha do quarto
+    Quarto escolhido;
+    if (!buscarQuarto(e.numeroQuarto, &escolhido) ||
+        escolhido.estaOcupado ||
+        escolhido.capacidade < hospedes)
+    {
+        printf("Quarto invalido ou indisponivel!\n");
+        return;
+    }
+
+    // Lê data de entrada
+    if (!lerData("Data de entrada", &e.dataEntrada))
+    {
+        return;
+    }
+
+    // Lê data de saída
+    if (!lerData("Data de saida", &e.dataSaida))
+    {
+        return;
+    }
+
+    // Calcula quantidade de diárias
+    e.quantidadeDiarias = diasEntreDatas(e.dataEntrada, e.dataSaida);
+    if (e.quantidadeDiarias <= 0)
+    {
+        printf("Datas invalidas! A data de saida deve ser posterior a data de entrada.\n");
+        return;
+    }
+
+    e.estadiaAtiva = 1;
+
+    // Salva estadia e marca quarto como ocupado
+    salvarEstadiaArquivo(e);
+    quartoOcupado(e.numeroQuarto, 1);
+
+    // Resumo
+    printf("\nEstadia registrada com sucesso!\n");
+    printf("Codigo da estadia: %d\n", e.codigoEstadia);
+    printf("Total de diarias: %d\n", e.quantidadeDiarias);
+
+    double valorTotal = e.quantidadeDiarias * escolhido.valorDiaria;
+    printf("Valor total estimado: R$ %.2f\n", valorTotal);
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+// ============================================================
+// FUNÇÃO PARA ENCERRAR ESTADIA
+// ============================================================
+
+/*
+ * Função: encerrarEstadia
+ * Objetivo: Encerrar uma estadia ativa
+ *           Calcula valor total, marca estadia como finalizada
+ *           e libera o quarto para nova ocupação
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void encerrarEstadia()
+{
+    int codigo;
+
+    // Valida código da estadia
+    do
+    {
+        printf("Codigo da estadia: ");
+        scanf("%d", &codigo);
+        if (codigo <= 0)
+            printf("Codigo invalido! Deve ser positivo.\n");
+    } while (codigo <= 0);
+
+    // Abre arquivos
+    FILE *in = fopen(ARQ_ESTADIAS, "rb");
+    FILE *out = fopen("temp.dat", "wb");
+
+    Estadia e;
+    int achou = 0;
+
+    // Processa todas as estadias
+    while (fread(&e, sizeof(Estadia), 1, in))
+    {
+        if (e.codigoEstadia == codigo && e.estadiaAtiva)
+        {
+            // Obtém informações do quarto
+            Quarto q;
+            buscarQuarto(e.numeroQuarto, &q);
+
+            double total = e.quantidadeDiarias * q.valorDiaria;
+
+            printf("\nValor total da estadia: R$ %.2f\n", total);
+
+            e.estadiaAtiva = 0;               // Finaliza estadia
+            quartoOcupado(e.numeroQuarto, 0); // Libera o quarto
+            achou = 1;
+        }
+
+        fwrite(&e, sizeof(Estadia), 1, out); // Grava no arquivo temporário
+    }
+
+    // Fecha e substitui arquivo original
+    fclose(in);
+    fclose(out);
+    remove(ARQ_ESTADIAS);
+    rename("temp.dat", ARQ_ESTADIAS);
+
+    // Feedback
+    if (!achou)
+        printf("Estadia nao encontrada.\n");
+    else
+        printf("Estadia encerrada!\n");
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
     getchar();
 }
 
