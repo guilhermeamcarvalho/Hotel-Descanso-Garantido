@@ -1278,6 +1278,187 @@ void mostrarEstadias()
 }
 
 // ============================================================
+// FUNÇÃO PARA MOSTRAR ESTADIAS DE UM CLIENTE
+// ============================================================
+
+/*
+ * Função: mostrarEstadiasCliente
+ * Objetivo: Mostrar todas as estadias de um cliente específico
+ *           Permite busca por código ou nome do cliente
+ * Parâmetros: -
+ * Retorno: void
+ */
+void mostrarEstadiasCliente()
+{
+    int opcao;
+    printf("\n=== PESQUISAR ESTADIAS POR CLIENTE ===\n");
+    printf("1 - Pesquisar por codigo do cliente\n");
+    printf("2 - Pesquisar por nome do cliente\n");
+    printf("Opcao: ");
+    scanf("%d", &opcao);
+    limparEntrada();
+    
+    int codigoCliente = -1;      // Código do cliente encontrado
+    char nomeCliente[50] = "";   // Nome do cliente
+    
+    // Busca por código
+    if (opcao == 1)
+    {
+        printf("Digite o codigo do cliente: ");
+        scanf("%d", &codigoCliente);
+        limparEntrada();
+        
+        // Verificar se o cliente existe
+        Cliente c;
+        if (!buscarCliente(codigoCliente, &c))
+        {
+            printf("Cliente nao encontrado.\n");
+            printf("\nPressione ENTER para voltar ao menu...");
+            getchar();
+            return;
+        }
+        strcpy(nomeCliente, c.nome);  // Armazena nome do cliente
+    }
+    // Busca por nome
+    else if (opcao == 2)
+    {
+        char nomeBusca[50];
+        printf("Digite o nome (ou parte do nome) do cliente: ");
+        fgets(nomeBusca, 50, stdin);
+        nomeBusca[strcspn(nomeBusca, "\n")] = 0;
+        
+        // Buscar cliente pelo nome no arquivo
+        FILE *arquivoClientes = fopen(ARQ_CLIENTES, "rb");
+        if (!arquivoClientes)
+        {
+            printf("Nenhum cliente cadastrado.\n");
+            printf("\nPressione ENTER para voltar ao menu...");
+            getchar();
+            return;
+        }
+        
+        Cliente c;
+        int encontrados = 0;
+        printf("\n=== CLIENTES ENCONTRADOS ===\n");
+        
+        // Lista todos os clientes que correspondem à busca
+        while (fread(&c, sizeof(Cliente), 1, arquivoClientes))
+        {
+            if (strstr(c.nome, nomeBusca) != NULL)
+            {
+                printf("%d - %s\n", c.codigoCliente, c.nome);
+                encontrados++;
+            }
+        }
+        fclose(arquivoClientes);
+        
+        // Se não encontrou nenhum cliente
+        if (encontrados == 0)
+        {
+            printf("Nenhum cliente encontrado com esse nome.\n");
+            printf("\nPressione ENTER para voltar ao menu...");
+            getchar();
+            return;
+        }
+        
+        // Se encontrou mais de um cliente, pede para escolher
+        if (encontrados > 1)
+        {
+            printf("\nDigite o codigo do cliente desejado: ");
+            scanf("%d", &codigoCliente);
+            limparEntrada();
+            
+            // Obter nome do cliente selecionado
+            Cliente clienteSelecionado;
+            if (buscarCliente(codigoCliente, &clienteSelecionado))
+            {
+                strcpy(nomeCliente, clienteSelecionado.nome);
+            }
+        }
+        else  // Se encontrou apenas um cliente
+        {
+            // Reabre arquivo para pegar dados do único cliente encontrado
+            arquivoClientes = fopen(ARQ_CLIENTES, "rb");
+            while (fread(&c, sizeof(Cliente), 1, arquivoClientes))
+            {
+                if (strstr(c.nome, nomeBusca) != NULL)
+                {
+                    codigoCliente = c.codigoCliente;
+                    strcpy(nomeCliente, c.nome);
+                    break;
+                }
+            }
+            fclose(arquivoClientes);
+        }
+    }
+    else
+    {
+        printf("Opcao invalida!\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+    
+    // Agora mostrar as estadias deste cliente
+    FILE *arquivoEstadias = fopen(ARQ_ESTADIAS, "rb");
+    if (!arquivoEstadias)
+    {
+        printf("Nenhuma estadia registrada.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+    
+    Estadia e;
+    int totalEstadias = 0;   // Contador de estadias
+    int totalDiarias = 0;    // Acumulador de diárias
+    
+    printf("\n=== ESTADIAS DO CLIENTE: %s (Codigo: %d) ===\n", nomeCliente, codigoCliente);
+    printf("==============================================\n");
+    
+    // Percorre todas as estadias procurando as do cliente
+    while (fread(&e, sizeof(Estadia), 1, arquivoEstadias))
+    {
+        if (e.codigoCliente == codigoCliente)
+        {
+            printf("\nEstadia: %d\n", e.codigoEstadia);
+            printf("Quarto: %d\n", e.numeroQuarto);
+            printf("Entrada: %02d/%02d/%04d\n", e.dataEntrada.dia, e.dataEntrada.mes, e.dataEntrada.ano);
+            printf("Saida: %02d/%02d/%04d\n", e.dataSaida.dia, e.dataSaida.mes, e.dataSaida.ano);
+            printf("Diarias: %d\n", e.quantidadeDiarias);
+            printf("Status: %s\n", e.estadiaAtiva ? "ATIVA" : "FINALIZADA");
+            printf("-------------------\n");
+            
+            totalEstadias++;
+            totalDiarias += e.quantidadeDiarias;
+        }
+    }
+    
+    fclose(arquivoEstadias);
+    
+    // Mostra resumo
+    if (totalEstadias == 0)
+    {
+        printf("Nenhuma estadia encontrada para este cliente.\n");
+    }
+    else
+    {
+        printf("\nRESUMO:\n");
+        printf("Total de estadias: %d\n", totalEstadias);
+        printf("Total de diarias: %d\n", totalDiarias);
+        
+        // Calcular pontos de fidelidade (10 pontos por diária)
+        int pontos = totalDiarias * 10;
+        printf("Pontos de fidelidade acumulados: %d pontos\n", pontos);
+    }
+    
+    printf("\nPressione ENTER para voltar ao menu...");
+    getchar();
+}
+
+
+
+// ============================================================
 // FUNÇÃO PRINCIPAL - MENU DO SISTEMA
 // ============================================================
 
