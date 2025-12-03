@@ -317,71 +317,71 @@ int buscarQuarto(int numero, Quarto *resultado)
 
 /\*
 
-&nbsp;\* Função: quartoOcupado
+\* Função: quartoOcupado
 
-&nbsp;\* Objetivo: Alterar status de ocupação de um quarto
+\* Objetivo: Alterar status de ocupação de um quarto
 
-&nbsp;\* Parâmetros: numero - número do quarto
+\* Parâmetros: numero - número do quarto
 
-&nbsp;\*             ocupado - novo status (1 = ocupado, 0 = livre)
+\*             ocupado - novo status (1 = ocupado, 0 = livre)
 
-&nbsp;\* Retorno: void
+\* Retorno: void
 
-&nbsp;\* 
+\* 
 
-&nbsp;\* Nota: Cria arquivo temporário para atualização, depois substitui o original
+\* Nota: Cria arquivo temporário para atualização, depois substitui o original
 
-&nbsp;\*/
+\*/
 
 void quartoOcupado(int numero, int ocupado)
 
 {
 
-&nbsp;   // Abre arquivo original para leitura e temporário para escrita
+   // Abre arquivo original para leitura e temporário para escrita
 
-&nbsp;   FILE \*in = fopen(ARQ\_QUARTOS, "rb");
+   FILE \*in = fopen(ARQ\_QUARTOS, "rb");
 
-&nbsp;   FILE \*out = fopen("temp.dat", "wb");
-
-
-
-&nbsp;   Quarto q;
-
-&nbsp;   // Lê todos os quartos do arquivo original
-
-&nbsp;   while (fread(\&q, sizeof(Quarto), 1, in))
-
-&nbsp;   {
-
-&nbsp;       // Se é o quarto procurado, atualiza status
-
-&nbsp;       if (q.numeroQuarto == numero)
-
-&nbsp;           q.estaOcupado = ocupado;
+   FILE \*out = fopen("temp.dat", "wb");
 
 
 
-&nbsp;       // Escreve no arquivo temporário (atualizado ou não)
+   Quarto q;
 
-&nbsp;       fwrite(\&q, sizeof(Quarto), 1, out);
+   // Lê todos os quartos do arquivo original
 
-&nbsp;   }
+   while (fread(\&q, sizeof(Quarto), 1, in))
+
+   {
+
+       // Se é o quarto procurado, atualiza status
+
+       if (q.numeroQuarto == numero)
+
+           q.estaOcupado = ocupado;
 
 
 
-&nbsp;   // Fecha arquivos
+       // Escreve no arquivo temporário (atualizado ou não)
 
-&nbsp;   fclose(in);
+       fwrite(\&q, sizeof(Quarto), 1, out);
 
-&nbsp;   fclose(out);
+   }
 
-&nbsp;   
 
-&nbsp;   // Substitui arquivo original pelo temporário
 
-&nbsp;   remove(ARQ\_QUARTOS);
+   // Fecha arquivos
 
-&nbsp;   rename("temp.dat", ARQ\_QUARTOS);
+   fclose(in);
+
+   fclose(out);
+
+   
+
+   // Substitui arquivo original pelo temporário
+
+   remove(ARQ\_QUARTOS);
+
+   rename("temp.dat", ARQ\_QUARTOS);
 
 }
 
