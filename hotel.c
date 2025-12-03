@@ -1456,6 +1456,171 @@ void mostrarEstadiasCliente()
     getchar();
 }
 
+// ============================================================
+// FUNÇÃO PARA CALCULAR PONTOS DE FIDELIDADE
+// ============================================================
+
+/*
+ * Função: calcularPontosFidelidade
+ * Objetivo: Calcular pontos de fidelidade de um cliente
+ *           Sistema: 10 pontos por diária hospedada
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void calcularPontosFidelidade()
+{
+    int opcao;
+    printf("\n=== CALCULAR PONTOS DE FIDELIDADE ===\n");
+    printf("1 - Calcular por codigo do cliente\n");
+    printf("2 - Calcular por nome do cliente\n");
+    printf("Opcao: ");
+    scanf("%d", &opcao);
+    limparEntrada();
+    
+    int codigoCliente = -1;
+    char nomeCliente[50] = "";
+    
+    // Processamento similar à função mostrarEstadiasCliente
+    if (opcao == 1)
+    {
+        printf("Digite o codigo do cliente: ");
+        scanf("%d", &codigoCliente);
+        limparEntrada();
+        
+        Cliente c;
+        if (!buscarCliente(codigoCliente, &c))
+        {
+            printf("Cliente nao encontrado.\n");
+            printf("\nPressione ENTER para voltar ao menu...");
+            getchar();
+            return;
+        }
+        strcpy(nomeCliente, c.nome);
+    }
+    else if (opcao == 2)
+    {
+        char nomeBusca[50];
+        printf("Digite o nome (ou parte do nome) do cliente: ");
+        fgets(nomeBusca, 50, stdin);
+        nomeBusca[strcspn(nomeBusca, "\n")] = 0;
+        
+        FILE *arquivoClientes = fopen(ARQ_CLIENTES, "rb");
+        if (!arquivoClientes)
+        {
+            printf("Nenhum cliente cadastrado.\n");
+            printf("\nPressione ENTER para voltar ao menu...");
+            getchar();
+            return;
+        }
+        
+        Cliente c;
+        int encontrados = 0;
+        printf("\n=== CLIENTES ENCONTRADOS ===\n");
+        
+        while (fread(&c, sizeof(Cliente), 1, arquivoClientes))
+        {
+            if (strstr(c.nome, nomeBusca) != NULL)
+            {
+                printf("%d - %s\n", c.codigoCliente, c.nome);
+                encontrados++;
+            }
+        }
+        fclose(arquivoClientes);
+        
+        if (encontrados == 0)
+        {
+            printf("Nenhum cliente encontrado com esse nome.\n");
+            printf("\nPressione ENTER para voltar ao menu...");
+            getchar();
+            return;
+        }
+        
+        if (encontrados > 1)
+        {
+            printf("\nDigite o codigo do cliente desejado: ");
+            scanf("%d", &codigoCliente);
+            limparEntrada();
+            
+            Cliente clienteSelecionado;
+            if (buscarCliente(codigoCliente, &clienteSelecionado))
+            {
+                strcpy(nomeCliente, clienteSelecionado.nome);
+            }
+        }
+        else
+        {
+            arquivoClientes = fopen(ARQ_CLIENTES, "rb");
+            while (fread(&c, sizeof(Cliente), 1, arquivoClientes))
+            {
+                if (strstr(c.nome, nomeBusca) != NULL)
+                {
+                    codigoCliente = c.codigoCliente;
+                    strcpy(nomeCliente, c.nome);
+                    break;
+                }
+            }
+            fclose(arquivoClientes);
+        }
+    }
+    else
+    {
+        printf("Opcao invalida!\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+    
+    // Calcular pontos de fidelidade
+    FILE *arquivoEstadias = fopen(ARQ_ESTADIAS, "rb");
+    if (!arquivoEstadias)
+    {
+        printf("Nenhuma estadia registrada.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+    
+    Estadia e;
+    int totalDiarias = 0;    // Acumula total de diárias
+    int totalEstadias = 0;   // Conta total de estadias
+    
+    // Soma diárias de todas as estadias do cliente
+    while (fread(&e, sizeof(Estadia), 1, arquivoEstadias))
+    {
+        if (e.codigoCliente == codigoCliente)
+        {
+            totalDiarias += e.quantidadeDiarias;
+            totalEstadias++;
+        }
+    }
+    
+    fclose(arquivoEstadias);
+    
+    // Calcula pontos: 10 pontos por diária
+    int pontos = totalDiarias * 10;
+    
+    // Exibe resultados
+    printf("\n=== PONTOS DE FIDELIDADE ===\n");
+    printf("Cliente: %s (Codigo: %d)\n", nomeCliente, codigoCliente);
+    printf("Total de estadias: %d\n", totalEstadias);
+    printf("Total de diarias: %d\n", totalDiarias);
+    printf("Pontos de fidelidade: %d pontos\n", pontos);
+    printf("\n(10 pontos por diaria hospedada)\n");
+    
+    // Mostra benefícios disponíveis baseados nos pontos
+    if (pontos > 0)
+    {
+        printf("\nVANTAGENS:\n");
+        if (pontos >= 100)
+            printf("- %d pontos: Direito a 1 diaria gratis!\n", (pontos/100)*100);
+        if (pontos >= 50)
+            printf("- %d pontos: Upgrade de quarto disponivel\n", (pontos/50)*50);
+        printf("- Proximo beneficio: %d pontos\n", ((pontos/100)+1)*100);
+    }
+    
+    printf("\nPressione ENTER para voltar ao menu...");
+    getchar();
+}
 
 
 // ============================================================
