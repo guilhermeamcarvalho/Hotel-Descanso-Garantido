@@ -728,6 +728,78 @@ void novaEstadia()
     getchar();
 }
 
+// ============================================================
+// FUNÇÃO PARA ENCERRAR ESTADIA
+// ============================================================
+
+/*
+ * Função: encerrarEstadia
+ * Objetivo: Encerrar uma estadia ativa
+ *           Calcula valor total, marca estadia como finalizada
+ *           e libera o quarto para nova ocupação
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void encerrarEstadia()
+{
+    int codigo;
+
+    // Valida código da estadia
+    do
+    {
+        printf("Codigo da estadia: ");
+        scanf("%d", &codigo);
+        if (codigo <= 0)
+            printf("Codigo invalido! Deve ser positivo.\n");
+    } while (codigo <= 0);
+
+    // Abre arquivos
+    FILE *in = fopen(ARQ_ESTADIAS, "rb");
+    FILE *out = fopen("temp.dat", "wb");
+
+    Estadia e;
+    int achou = 0;
+
+    // Processa todas as estadias
+    while (fread(&e, sizeof(Estadia), 1, in))
+    {
+        if (e.codigoEstadia == codigo && e.estadiaAtiva)
+        {
+            // Obtém informações do quarto
+            Quarto q;
+            buscarQuarto(e.numeroQuarto, &q);
+
+            double total = e.quantidadeDiarias * q.valorDiaria;
+
+            printf("\nValor total da estadia: R$ %.2f\n", total);
+
+            e.estadiaAtiva = 0;         // Finaliza estadia
+            quartoOcupado(e.numeroQuarto, 0); // Libera o quarto
+            achou = 1;
+        }
+
+        fwrite(&e, sizeof(Estadia), 1, out);  // Grava no arquivo temporário
+    }
+
+    // Fecha e substitui arquivo original
+    fclose(in);
+    fclose(out);
+    remove(ARQ_ESTADIAS);
+    rename("temp.dat", ARQ_ESTADIAS);
+
+    // Feedback
+    if (!achou)
+        printf("Estadia nao encontrada.\n");
+    else
+        printf("Estadia encerrada!\n");
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+
+
 
 
 // ============================================================
