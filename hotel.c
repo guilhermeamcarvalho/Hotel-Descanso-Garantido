@@ -1713,10 +1713,10 @@ int main()
             printf("\n[FUNCAO NAO IMPLEMENTADA] Pesquisar funcionario\n");
             break;
         case 12:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Mostrar estadias de cliente\n");
+            mostrarEstadiasCliente();
             break;
         case 13:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Calcular pontos de fidelidade\n");
+            calcularPontosFidelidade();
             break;
         case 0:
             printf("\nSaindo do sistema...\n");
