@@ -314,7 +314,7 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ## **📝 ETAPA 8: FIDELIDADE E RELATÓRIOS**
 
 ### **Responsável: RAFAEL**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 
 ### **✅ O QUE DEVE SER IMPLEMENTADO:**
 ```c
@@ -324,15 +324,15 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ```
 
 ### **📋 CHECKLIST DE VERIFICAÇÃO:**
-- [ ] `mostrarEstadiasCliente()` busca por código do cliente
-- [ ] `mostrarEstadiasCliente()` busca por nome do cliente
-- [ ] `mostrarEstadiasCliente()` mostra histórico completo
-- [ ] `mostrarEstadiasCliente()` calcula total de diárias
-- [ ] `calcularPontosFidelidade()` calcula 10 pontos/diária
-- [ ] `calcularPontosFidelidade()` mostra benefícios
-- [ ] Ambas funções mostram estatísticas
-- [ ] Menu opção 12 funciona completamente
-- [ ] Menu opção 13 funciona completamente
+- [✅] `mostrarEstadiasCliente()` busca por código do cliente
+- [✅] `mostrarEstadiasCliente()` busca por nome do cliente
+- [✅] `mostrarEstadiasCliente()` mostra histórico completo
+- [✅] `mostrarEstadiasCliente()` calcula total de diárias
+- [✅] `calcularPontosFidelidade()` calcula 10 pontos/diária
+- [✅] `calcularPontosFidelidade()` mostra benefícios
+- [✅] Ambas funções mostram estatísticas
+- [✅] Menu opção 12 funciona completamente
+- [✅] Menu opção 13 funciona completamente
 
 ### **🧪 TESTES A REALIZAR:**
 ```
@@ -353,7 +353,7 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 ## **📝 ETAPA 9: TESTES FINAIS**
 
 ### **Responsável: SAMUEL**
-### **Status:** ⏳ **PENDENTE**
+### **Status:** ✅ **CONCLUÍDA**
 ### **Prazo:** Semana 3 - Quarta-feira
 
 ### **✅ O QUE DEVE SER FEITO:**
@@ -363,21 +363,21 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 4. Documentação final
 
 ### **📋 CHECKLIST DE TESTES FINAIS:**
-- [ ] **Teste de fluxo completo:**
+- [✅] **Teste de fluxo completo:**
   - Cadastrar cliente, funcionário, quarto
   - Fazer estadia
   - Encerrar estadia
   - Ver histórico
   - Calcular pontos
-- [ ] **Teste de dados inválidos:**
+- [✅] **Teste de dados inválidos:**
   - Datas inválidas
   - Códigos inexistentes
   - Valores negativos
-- [ ] **Teste de arquivos:**
+- [✅] **Teste de arquivos:**
   - Arquivos são criados corretamente
   - Dados persistem entre execuções
   - Não corrompe arquivos existentes
-- [ ] **Teste de usabilidade:**
+- [✅] **Teste de usabilidade:**
   - Menu é intuitivo
   - Mensagens de erro são claras
   - Formatação é consistente
@@ -392,7 +392,7 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
 
 ## **📊 CONTROLE DE PROGRESSO**
 
-### **Progresso Geral:** 77% (7/9 etapas concluídas)
+### **Progresso Geral:** 100% (9/9 etapas concluídas)
 
 ### **Progresso por Integrante:**
 - **Guilherme:** 3/3 tarefas (100%)
@@ -400,29 +400,29 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
   - ETAPA 4: ✅ Concluída  
   - ETAPA 7: ✅ Concluída
 
-- **Rafael:** 2/3 tarefas (66%)
+- **Rafael:** 3/3 tarefas (100%)
   - ETAPA 2: ✅ Concluída
   - ETAPA 5: ✅ Concluída
-  - ETAPA 8: ⏳ Pendente
+  - ETAPA 8: ✅ Concluída
 
-- **Samuel:** 2/3 tarefas (66%)
+- **Samuel:** 3/3 tarefas (100%)
   - ETAPA 3: ✅ Concluída
   - ETAPA 6: ✅ Concluída
-  - ETAPA 9: ⏳ Pendente
+  - ETAPA 9: ✅ Concluída
 
 ---
 
 ## **✅ CRITÉRIOS DE ACEITAÇÃO FINAL**
 
 ### **O sistema está pronto quando:**
-1. [ ] Todas as 13 opções do menu funcionam
-2. [ ] Não há erros de compilação
-3. [ ] Não há crashes durante uso normal
-4. [ ] Dados são persistidos corretamente
-5. [ ] Validações de entrada funcionam
-6. [ ] Cálculos de datas estão corretos
-7. [ ] Sistema de fidelidade calcula pontos corretamente
-8. [ ] Interface é amigável e informativa
+1. [✅] Todas as 13 opções do menu funcionam
+2. [✅] Não há erros de compilação
+3. [✅] Não há crashes durante uso normal
+4. [✅] Dados são persistidos corretamente
+5. [✅] Validações de entrada funcionam
+6. [✅] Cálculos de datas estão corretos
+7. [✅] Sistema de fidelidade calcula pontos corretamente
+8. [✅] Interface é amigável e informativa
 
 ---
 
