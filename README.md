@@ -21,7 +21,7 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 | 6. Sistema de Estadias | Samuel | ✅ Concluída |
 | 7. Pesquisas Avançadas | Guilherme | ✅ Concluída |
 | 8. Fidelidade e Relatórios | Rafael | ✅ Concluída |
-| 9. Testes Finais | Samuel | ⏳ Pendente |
+| 9. Testes Finais | Samuel | ✅ Concluída |
 ---
 # **SPRINT 1 (2 a 3 dias)
 
