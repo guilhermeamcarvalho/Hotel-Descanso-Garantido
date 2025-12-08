@@ -1,15 +1,15 @@
-/*
+/* 
  * Sistema de Gerenciamento Hoteleiro - Hotel Descanso Garantido
  * Desenvolvido por: Guilherme, Rafael e Samuel
- *
+ * 
  * Descrição: Sistema completo para gerenciamento de um hotel,
  * incluindo cadastro de clientes, funcionários, quartos,
  * gerenciamento de estadias e sistema de fidelidade.
  */
 
-#include <stdio.h>  // (printf, scanf, etc.)
-#include <stdlib.h> // (FILE, malloc, etc.)
-#include <string.h> // Para funções de manipulação de strings
+#include <stdio.h>      // (printf, scanf, etc.)
+#include <stdlib.h>     // (FILE, malloc, etc.)
+#include <string.h>     // Para funções de manipulação de strings
 
 // ============================================================
 // DEFINIÇÃO DE STRUCTS (ESTRUTURAS DE DADOS)
@@ -21,9 +21,9 @@
  */
 typedef struct
 {
-    int dia; // Dia do mês (1-31)
-    int mes; // Mês do ano (1-12)
-    int ano; // Ano completo (ex: 2024)
+    int dia;    // Dia do mês (1-31)
+    int mes;    // Mês do ano (1-12)
+    int ano;    // Ano completo (ex: 2024)
 } Data;
 
 /*
@@ -32,10 +32,10 @@ typedef struct
  */
 typedef struct
 {
-    int codigoCliente; // Código único do cliente (gerado automaticamente)
-    char nome[50];     // Nome completo do cliente (máximo 49 caracteres + \0)
-    char endereco[50]; // Endereço do cliente
-    char telefone[20]; // Telefone para contato
+    int codigoCliente;      // Código único do cliente (gerado automaticamente)
+    char nome[50];          // Nome completo do cliente (máximo 49 caracteres + \0)
+    char endereco[50];      // Endereço do cliente
+    char telefone[20];      // Telefone para contato
 } Cliente;
 
 /*
@@ -44,11 +44,11 @@ typedef struct
  */
 typedef struct
 {
-    int codigoFuncionario; // Código único do funcionário
-    char nome[50];         // Nome completo do funcionário
-    char telefone[20];     // Telefone para contato
-    char cargo[30];        // Cargo/função no hotel
-    double salario;        // Salário mensal
+    int codigoFuncionario;  // Código único do funcionário
+    char nome[50];          // Nome completo do funcionário
+    char telefone[20];      // Telefone para contato
+    char cargo[30];         // Cargo/função no hotel
+    double salario;         // Salário mensal
 } Funcionario;
 
 /*
@@ -57,10 +57,10 @@ typedef struct
  */
 typedef struct
 {
-    int numeroQuarto;   // Número do quarto (deve ser único)
-    int capacidade;     // Número máximo de hóspedes
-    double valorDiaria; // Preço por diária
-    int estaOcupado;    // Status: 0 = livre, 1 = ocupado
+    int numeroQuarto;       // Número do quarto (deve ser único)
+    int capacidade;         // Número máximo de hóspedes
+    double valorDiaria;     // Preço por diária
+    int estaOcupado;        // Status: 0 = livre, 1 = ocupado
 } Quarto;
 
 /*
@@ -69,13 +69,13 @@ typedef struct
  */
 typedef struct
 {
-    int codigoEstadia;     // Código único da estadia
-    int codigoCliente;     // Código do cliente hospedado
-    int numeroQuarto;      // Número do quarto ocupado
-    Data dataEntrada;      // Data de check-in
-    Data dataSaida;        // Data de check-out
-    int quantidadeDiarias; // Número total de diárias
-    int estadiaAtiva;      // Status: 1 = ativa, 0 = finalizada
+    int codigoEstadia;      // Código único da estadia
+    int codigoCliente;      // Código do cliente hospedado
+    int numeroQuarto;       // Número do quarto ocupado
+    Data dataEntrada;       // Data de check-in
+    Data dataSaida;         // Data de check-out
+    int quantidadeDiarias;  // Número total de diárias
+    int estadiaAtiva;       // Status: 1 = ativa, 0 = finalizada
 } Estadia;
 
 // ============================================================
@@ -83,10 +83,10 @@ typedef struct
 // ============================================================
 
 // Nomes dos arquivos binários onde os dados serão persistidos
-const char *ARQ_CLIENTES = "clientes.bin";         // Arquivo de clientes
+const char *ARQ_CLIENTES = "clientes.bin";        // Arquivo de clientes
 const char *ARQ_FUNCIONARIOS = "funcionarios.bin"; // Arquivo de funcionários
-const char *ARQ_QUARTOS = "quartos.bin";           // Arquivo de quartos
-const char *ARQ_ESTADIAS = "estadias.bin";         // Arquivo de estadias
+const char *ARQ_QUARTOS = "quartos.bin";          // Arquivo de quartos
+const char *ARQ_ESTADIAS = "estadias.bin";        // Arquivo de estadias
 
 // ============================================================
 // FUNÇÃO AUXILIAR PARA LIMPAR BUFFER DE ENTRADA
@@ -101,7 +101,7 @@ const char *ARQ_ESTADIAS = "estadias.bin";         // Arquivo de estadias
  */
 void limparEntrada()
 {
-    int c; // Variável para armazenar cada caractere
+    int c;  // Variável para armazenar cada caractere
     // Lê e descarta todos os caracteres até encontrar \n ou EOF
     while ((c = getchar()) != '\n' && c != EOF)
     {
@@ -122,21 +122,21 @@ void limparEntrada()
  */
 int diasFevereiro(int ano)
 {
-    int bissexto = 0; // Flag para indicar se é ano bissexto
+    int bissexto = 0;  // Flag para indicar se é ano bissexto
 
     // Verifica se é ano bissexto (divisível por 4)
     if (ano % 4 == 0)
     {
         // Exceção: se for divisível por 100, só é bissexto se for divisível por 400
         if (ano % 100 != 0 || ano % 400 == 0)
-            bissexto = 1; // É bissexto
+            bissexto = 1;  // É bissexto
     }
-
+    
     // Retorna quantidade de dias conforme o ano
     if (bissexto == 1)
-        return 29; // Fevereiro em ano bissexto
+        return 29;  // Fevereiro em ano bissexto
     else
-        return 28; // Fevereiro em ano não bissexto
+        return 28;  // Fevereiro em ano não bissexto
 }
 
 /*
@@ -151,15 +151,15 @@ int diasNoMes(int mes, int ano)
     // Switch para determinar dias conforme o mês
     switch (mes)
     {
-    case 2: // Fevereiro - depende do ano
+    case 2:  // Fevereiro - depende do ano
         return diasFevereiro(ano);
-    case 4:        // Abril
-    case 6:        // Junho
-    case 9:        // Setembro
-    case 11:       // Novembro
-        return 30; // Meses com 30 dias
-    default:       // Todos os outros meses
-        return 31; // Meses com 31 dias
+    case 4:   // Abril
+    case 6:   // Junho
+    case 9:   // Setembro
+    case 11:  // Novembro
+        return 30;  // Meses com 30 dias
+    default:  // Todos os outros meses
+        return 31;  // Meses com 31 dias
     }
 }
 
@@ -173,29 +173,68 @@ int diasNoMes(int mes, int ano)
  * Parâmetros: d - estrutura Data contendo dia, mês e ano
  * Retorno: int - 1 se válida, 0 se inválida
  */
-int validarData(Data d)
-{
+int validarData(Data d) {
     // Validar ano (consideramos de 1900 a 2100 como válido)
-    if (d.ano < 1900 || d.ano > 2100)
-    {
-        return 0; // Ano fora do intervalo permitido
+    if (d.ano < 1900 || d.ano > 2100) {
+        return 0;  // Ano fora do intervalo permitido
     }
-
+    
     // Validar mês (deve estar entre 1 e 12)
-    if (d.mes < 1 || d.mes > 12)
-    {
-        return 0; // Mês inválido
+    if (d.mes < 1 || d.mes > 12) {
+        return 0;  // Mês inválido
     }
-
+    
     // Validar dia baseado no mês e ano
-    int diasNoMesValido = diasNoMes(d.mes, d.ano); // Obtém dias do mês
-    if (d.dia < 1 || d.dia > diasNoMesValido)
-    {
-        return 0; // Dia inválido para o mês/ano
+    int diasNoMesValido = diasNoMes(d.mes, d.ano);  // Obtém dias do mês
+    if (d.dia < 1 || d.dia > diasNoMesValido) {
+        return 0;  // Dia inválido para o mês/ano
     }
-
-    return 1; // Data válida
+    
+    return 1;  // Data válida
 }
+
+// ============================================================
+// FUNÇÃO AUXILIAR PARA LER DATA COM VALIDAÇÃO
+// ============================================================
+
+/*
+ * Função: lerData
+ * Objetivo: Ler uma data do usuário com validação e mensagens de erro
+ * Parâmetros: mensagem - texto a ser exibido para o usuário
+ *             data - ponteiro para estrutura Data onde armazenar o resultado
+ * Retorno: int - 1 se leitura bem sucedida, 0 se falhou após 3 tentativas
+ */
+int lerData(const char *mensagem, Data *data) {
+    int tentativas = 0;  // Contador de tentativas falhas
+    
+    // Permite até 3 tentativas
+    while (tentativas < 3) {
+        printf("%s (DD MM AAAA): ", mensagem);
+        
+        // Ler os três valores (dia, mês, ano)
+        if (scanf("%d %d %d", &data->dia, &data->mes, &data->ano) != 3) {
+            printf("Formato invalido! Digite dia, mes e ano separados por espacos.\n");
+            limparEntrada();  // Limpa buffer para próxima tentativa
+            tentativas++;
+            continue;
+        }
+        
+        // Validar a data usando a função validarData
+        if (!validarData(*data)) {
+            printf("Data invalida! Verifique se o dia, mes e ano estao corretos.\n");
+            printf("Exemplo: 25 12 2024 para 25 de dezembro de 2024.\n");
+            tentativas++;
+            continue;
+        }
+        
+        return 1; // Data válida lida com sucesso
+    }
+    
+    // Se chegou aqui, falhou após 3 tentativas
+    printf("Muitas tentativas invalidas. Voltando ao menu.\n");
+    return 0; // Falha na leitura
+}
+
 // ============================================================
 // FUNÇÕES PARA GERAR CÓDIGOS AUTOMÁTICOS
 // ============================================================
@@ -209,21 +248,21 @@ int validarData(Data d)
  */
 int gerarCodigoCliente()
 {
-    FILE *arquivo = fopen(ARQ_CLIENTES, "rb"); // Abre para leitura binária
-    if (!arquivo)                              // Se arquivo não existe
-        return 1;                              // Primeiro código será 1
+    FILE *arquivo = fopen(ARQ_CLIENTES, "rb");  // Abre para leitura binária
+    if (!arquivo)  // Se arquivo não existe
+        return 1;  // Primeiro código será 1
 
     Cliente c;
-    int maior = 0; // Armazena o maior código encontrado
+    int maior = 0;  // Armazena o maior código encontrado
 
     // Percorre todos os clientes no arquivo
     while (fread(&c, sizeof(Cliente), 1, arquivo))
     {
         if (c.codigoCliente > maior)
-            maior = c.codigoCliente; // Atualiza maior código
+            maior = c.codigoCliente;  // Atualiza maior código
     }
     fclose(arquivo);  // Fecha o arquivo
-    return maior + 1; // Retorna próximo código
+    return maior + 1;  // Retorna próximo código
 }
 
 /*
@@ -236,7 +275,7 @@ int gerarCodigoFuncionario()
 {
     FILE *arquivo = fopen(ARQ_FUNCIONARIOS, "rb");
     if (!arquivo)
-        return 1; // Primeiro código
+        return 1;  // Primeiro código
 
     Funcionario func;
     int maior = 0;
@@ -260,7 +299,7 @@ int gerarCodigoEstadia()
 {
     FILE *arquivo = fopen(ARQ_ESTADIAS, "rb");
     if (!arquivo)
-        return 1; // Primeiro código
+        return 1;  // Primeiro código
 
     Estadia e;
     int maior = 0;
@@ -274,7 +313,6 @@ int gerarCodigoEstadia()
     return maior + 1;
 }
 
-
 // ============================================================
 // FUNÇÕES PARA SALVAR DADOS EM ARQUIVOS
 // ============================================================
@@ -287,9 +325,9 @@ int gerarCodigoEstadia()
  */
 void salvarClienteArquivo(Cliente c)
 {
-    FILE *arq = fopen(ARQ_CLIENTES, "ab"); // Abre para append binário
-    fwrite(&c, sizeof(Cliente), 1, arq);   // Escreve estrutura no arquivo
-    fclose(arq);                           // Fecha arquivo
+    FILE *arq = fopen(ARQ_CLIENTES, "ab");  // Abre para append binário
+    fwrite(&c, sizeof(Cliente), 1, arq);    // Escreve estrutura no arquivo
+    fclose(arq);                            // Fecha arquivo
 }
 
 /*
@@ -332,6 +370,66 @@ void salvarEstadiaArquivo(Estadia e)
 }
 
 // ============================================================
+// FUNÇÃO PARA CÁLCULO DE DIAS ENTRE DATAS
+// ============================================================
+
+/*
+ * Função: diasEntreDatas
+ * Objetivo: Calcular o número de dias entre duas datas
+ *           Usado para calcular diárias de estadia
+ * Parâmetros: e - data de entrada
+ *             s - data de saída
+ * Retorno: int - número de dias, ou -1 se datas inválidas
+ */
+int diasEntreDatas(Data e, Data s)
+{
+    // Primeiro validar ambas as datas
+    if (!validarData(e) || !validarData(s)) {
+        return -1;  // Datas inválidas
+    }
+    
+    // Verificar se a data de saída é posterior à data de entrada
+    if (s.ano < e.ano)
+        return -1;  // Saída em ano anterior à entrada
+    if (s.ano == e.ano && s.mes < e.mes)
+        return -1;  // Mesmo ano, mas mês de saída anterior
+    if (s.ano == e.ano && s.mes == e.mes && s.dia <= e.dia)
+        return -1;  // Mesmo mês/ano, mas dia de saída não posterior
+
+    int dias = 0;  // Acumulador de dias
+
+    // Caso simples: mesmo mês e ano
+    if (e.ano == s.ano && e.mes == s.mes)
+        return s.dia - e.dia;  // Apenas subtrai os dias
+
+    // Dias restantes no mês de entrada
+    dias += diasNoMes(e.mes, e.ano) - e.dia;
+
+    // Meses intermediários entre entrada e saída
+    int mesAtual = e.mes + 1;
+    int anoAtual = e.ano;
+
+    // Percorre meses entre entrada e saída (excluindo mês de entrada e saída)
+    while (anoAtual < s.ano || (anoAtual == s.ano && mesAtual < s.mes))
+    {
+        dias += diasNoMes(mesAtual, anoAtual);  // Adiciona dias do mês
+        mesAtual++;
+
+        // Ajusta ano se passar de dezembro
+        if (mesAtual > 12)
+        {
+            mesAtual = 1;
+            anoAtual++;
+        }
+    }
+
+    // Dias no mês de saída
+    dias += s.dia;
+
+    return dias;  // Retorna total de dias
+}
+
+// ============================================================
 // FUNÇÕES DE BUSCA EM ARQUIVOS
 // ============================================================
 
@@ -346,7 +444,7 @@ int buscarCliente(int codigo, Cliente *resultado)
 {
     FILE *arquivo = fopen(ARQ_CLIENTES, "rb");
     if (!arquivo)
-        return 0; // Arquivo não existe
+        return 0;  // Arquivo não existe
 
     Cliente c;
     // Percorre arquivo procurando cliente com código especificado
@@ -354,13 +452,13 @@ int buscarCliente(int codigo, Cliente *resultado)
     {
         if (c.codigoCliente == codigo)
         {
-            *resultado = c; // Copia cliente encontrado
+            *resultado = c;  // Copia cliente encontrado
             fclose(arquivo);
-            return 1; // Sucesso
+            return 1;  // Sucesso
         }
     }
     fclose(arquivo);
-    return 0; // Cliente não encontrado
+    return 0;  // Cliente não encontrado
 }
 
 /*
@@ -389,71 +487,47 @@ int buscarQuarto(int numero, Quarto *resultado)
     fclose(arquivo);
     return 0;
 }
+
 // ============================================================
-
 // FUNÇÃO PARA MARCAR QUARTO COMO OCUPADO OU LIVRE
-
 // ============================================================
 
 /*
-
-* Função: quartoOcupado
-
-* Objetivo: Alterar status de ocupação de um quarto
-
-* Parâmetros: numero - número do quarto
-
-*             ocupado - novo status (1 = ocupado, 0 = livre)
-
-* Retorno: void
-
-*
-
-* Nota: Cria arquivo temporário para atualização, depois substitui o original
-
-*/
-
+ * Função: quartoOcupado
+ * Objetivo: Alterar status de ocupação de um quarto
+ * Parâmetros: numero - número do quarto
+ *             ocupado - novo status (1 = ocupado, 0 = livre)
+ * Retorno: void
+ * 
+ * Nota: Cria arquivo temporário para atualização, depois substitui o original
+ */
 void quartoOcupado(int numero, int ocupado)
-
 {
-
     // Abre arquivo original para leitura e temporário para escrita
-
     FILE *in = fopen(ARQ_QUARTOS, "rb");
-
     FILE *out = fopen("temp.dat", "wb");
 
     Quarto q;
-
     // Lê todos os quartos do arquivo original
-
-    while (fread(& q, sizeof(Quarto), 1, in))
-
+    while (fread(&q, sizeof(Quarto), 1, in))
     {
-
         // Se é o quarto procurado, atualiza status
-
         if (q.numeroQuarto == numero)
-
             q.estaOcupado = ocupado;
 
         // Escreve no arquivo temporário (atualizado ou não)
-
-        fwrite(& q, sizeof(Quarto), 1, out);
+        fwrite(&q, sizeof(Quarto), 1, out);
     }
 
     // Fecha arquivos
-
     fclose(in);
-
     fclose(out);
-
+    
     // Substitui arquivo original pelo temporário
-
     remove(ARQ_QUARTOS);
-
     rename("temp.dat", ARQ_QUARTOS);
 }
+
 // ============================================================
 // FUNÇÕES PARA PESQUISA DE CLIENTES
 // ============================================================
@@ -636,308 +710,6 @@ void pesquisarFuncionario()
         printf("Funcionario nao encontrado.\n");
     
     printf("\nPressione ENTER para voltar ao menu...");
-    getchar();
-}
-
-// ============================================================
-// FUNÇÕES PARA MOSTRAR DADOS (LISTAGENS)
-// ============================================================
-
-/*
- * Função: mostrarClientes
- * Objetivo: Listar todos os clientes cadastrados no sistema
- *           Inclui contador total
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void mostrarClientes()
-{
-    FILE *arquivo = fopen(ARQ_CLIENTES, "rb");
-    if (!arquivo)
-    {
-        printf("Nenhum cliente cadastrado.\n");
-        printf("\nPressione ENTER para voltar ao menu...");
-        getchar();
-        return;
-    }
-
-    Cliente c;
-    int count = 0; // Contador de clientes
-
-    printf("\n=== LISTA DE CLIENTES ===\n");
-    printf("========================================\n");
-
-    // Lê e exibe cada cliente
-    while (fread(&c, sizeof(Cliente), 1, arquivo))
-    {
-        printf("\nCodigo: %d\n", c.codigoCliente);
-        printf("Nome: %s\n", c.nome);
-        printf("Endereco: %s\n", c.endereco);
-        printf("Telefone: %s\n", c.telefone);
-        printf("-------------------\n");
-        count++;
-    }
-    fclose(arquivo);
-
-    printf("Total de clientes: %d\n", count);
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-
-// ============================================================
-// FUNÇÃO AUXILIAR PARA LER DATA COM VALIDAÇÃO
-// ============================================================
-
-/*
- * Função: lerData
- * Objetivo: Ler uma data do usuário com validação e mensagens de erro
- * Parâmetros: mensagem - texto a ser exibido para o usuário
- *             data - ponteiro para estrutura Data onde armazenar o resultado
- * Retorno: int - 1 se leitura bem sucedida, 0 se falhou após 3 tentativas
- */
-int lerData(const char *mensagem, Data *data)
-{
-    int tentativas = 0; // Contador de tentativas falhas
-
-    // Permite até 3 tentativas
-    while (tentativas < 3)
-    {
-        printf("%s (DD MM AAAA): ", mensagem);
-
-        // Ler os três valores (dia, mês, ano)
-        if (scanf("%d %d %d", &data->dia, &data->mes, &data->ano) != 3)
-        {
-            printf("Formato invalido! Digite dia, mes e ano separados por espacos.\n");
-            limparEntrada(); // Limpa buffer para próxima tentativa
-            tentativas++;
-            continue;
-        }
-
-        // Validar a data usando a função validarData
-        if (!validarData(*data))
-        {
-            printf("Data invalida! Verifique se o dia, mes e ano estao corretos.\n");
-            printf("Exemplo: 25 12 2024 para 25 de dezembro de 2024.\n");
-            tentativas++;
-            continue;
-        }
-
-        return 1; // Data válida lida com sucesso
-    }
-
-    // Se chegou aqui, falhou após 3 tentativas
-    printf("Muitas tentativas invalidas. Voltando ao menu.\n");
-    return 0; // Falha na leitura
-}
-
-// ============================================================
-// FUNÇÃO PARA CÁLCULO DE DIAS ENTRE DATAS
-// ============================================================
-
-/*
- * Função: diasEntreDatas
- * Objetivo: Calcular o número de dias entre duas datas
- *           Usado para calcular diárias de estadia
- * Parâmetros: e - data de entrada
- *             s - data de saída
- * Retorno: int - número de dias, ou -1 se datas inválidas
- */
-int diasEntreDatas(Data e, Data s)
-{
-    // Primeiro validar ambas as datas
-    if (!validarData(e) || !validarData(s))
-    {
-        return -1; // Datas inválidas
-    }
-
-    // Verificar se a data de saída é posterior à data de entrada
-    if (s.ano < e.ano)
-        return -1; // Saída em ano anterior à entrada
-    if (s.ano == e.ano && s.mes < e.mes)
-        return -1; // Mesmo ano, mas mês de saída anterior
-    if (s.ano == e.ano && s.mes == e.mes && s.dia <= e.dia)
-        return -1; // Mesmo mês/ano, mas dia de saída não posterior
-
-    int dias = 0; // Acumulador de dias
-
-    // Caso simples: mesmo mês e ano
-    if (e.ano == s.ano && e.mes == s.mes)
-        return s.dia - e.dia; // Apenas subtrai os dias
-
-    // Dias restantes no mês de entrada
-    dias += diasNoMes(e.mes, e.ano) - e.dia;
-
-    // Meses intermediários entre entrada e saída
-    int mesAtual = e.mes + 1;
-    int anoAtual = e.ano;
-
-    // Percorre meses entre entrada e saída (excluindo mês de entrada e saída)
-    while (anoAtual < s.ano || (anoAtual == s.ano && mesAtual < s.mes))
-    {
-        dias += diasNoMes(mesAtual, anoAtual); // Adiciona dias do mês
-        mesAtual++;
-
-        // Ajusta ano se passar de dezembro
-        if (mesAtual > 12)
-        {
-            mesAtual = 1;
-            anoAtual++;
-        }
-    }
-
-    // Dias no mês de saída
-    dias += s.dia;
-
-    return dias; // Retorna total de dias
-}
-
-// ============================================================
-// FUNÇÕES PARA MOSTRAR DADOS (CONTINUAÇÃO)
-// ============================================================
-
-/*
- * Função: mostrarFuncionarios
- * Objetivo: Listar todos os funcionários cadastrados
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void mostrarFuncionarios()
-{
-    FILE *arquivo = fopen(ARQ_FUNCIONARIOS, "rb");
-    if (!arquivo)
-    {
-        printf("Nenhum funcionario cadastrado.\n");
-        printf("\nPressione ENTER para voltar ao menu...");
-        getchar();
-        return;
-    }
-
-    Funcionario func;
-    int count = 0;
-
-    printf("\n=== LISTA DE FUNCIONaRIOS ===\n");
-    printf("========================================\n");
-    while (fread(&func, sizeof(Funcionario), 1, arquivo))
-    {
-        printf("\nCodigo: %d\n", func.codigoFuncionario);
-        printf("Nome: %s\n", func.nome);
-        printf("Telefone: %s\n", func.telefone);
-        printf("Cargo: %s\n", func.cargo);
-        printf("Salario: R$ %.2f\n", func.salario);
-        printf("-------------------\n");
-        count++;
-    }
-    fclose(arquivo);
-
-    printf("Total de funcionarios: %d\n", count);
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-
-/*
- * Função: mostrarQuartos
- * Objetivo: Listar todos os quartos com status de ocupação
- *           Inclui estatísticas: total, ocupados e livres
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void mostrarQuartos()
-{
-    FILE *arquivo = fopen(ARQ_QUARTOS, "rb");
-    if (!arquivo)
-    {
-        printf("Nenhum quarto cadastrado.\n");
-        printf("\nPressione ENTER para voltar ao menu...");
-        getchar();
-        return;
-    }
-
-    Quarto q;
-    int count = 0;    // Total de quartos
-    int ocupados = 0; // Quartos ocupados
-    int livres = 0;   // Quartos livres
-
-    printf("\n=== LISTA DE QUARTOS ===\n");
-    printf("========================================\n");
-    while (fread(&q, sizeof(Quarto), 1, arquivo))
-    {
-        printf("\nNumero: %d\n", q.numeroQuarto);
-        printf("Capacidade: %d hospedes\n", q.capacidade);
-        printf("Valor da diaria: R$ %.2f\n", q.valorDiaria);
-        printf("Status: %s\n", q.estaOcupado ? "OCUPADO" : "LIVRE");
-        printf("-------------------\n");
-
-        count++;
-        if (q.estaOcupado)
-            ocupados++;
-        else
-            livres++;
-    }
-    fclose(arquivo);
-
-    // Mostra estatísticas
-    printf("RESUMO:\n");
-    printf("Total de quartos: %d\n", count);
-    printf("Quartos ocupados: %d\n", ocupados);
-    printf("Quartos livres: %d\n", livres);
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
-    getchar();
-}
-
-/*
- * Função: mostrarEstadias
- * Objetivo: Listar todas as estadias registradas
- *           Inclui status (ativa/finalizada) e estatísticas
- * Parâmetros: Nenhum
- * Retorno: void
- */
-void mostrarEstadias()
-{
-    FILE *arquivo = fopen(ARQ_ESTADIAS, "rb");
-    if (!arquivo)
-    {
-        printf("Nenhuma estadia registrada.\n");
-        printf("\nPressione ENTER para voltar ao menu...");
-        getchar();
-        return;
-    }
-
-    Estadia e;
-    int count = 0;       // Total de estadias
-    int ativas = 0;      // Estadias ativas
-    int finalizadas = 0; // Estadias finalizadas
-
-    printf("\n=== LISTA DE ESTADIAS ===\n");
-    printf("========================================\n");
-    while (fread(&e, sizeof(Estadia), 1, arquivo))
-    {
-        printf("\nCodigo da estadia: %d\n", e.codigoEstadia);
-        printf("Codigo do cliente: %d\n", e.codigoCliente);
-        printf("Numero do quarto: %d\n", e.numeroQuarto);
-        printf("Data de entrada: %02d/%02d/%04d\n", e.dataEntrada.dia, e.dataEntrada.mes, e.dataEntrada.ano);
-        printf("Data de saida: %02d/%02d/%04d\n", e.dataSaida.dia, e.dataSaida.mes, e.dataSaida.ano);
-        printf("Quantidade de diarias: %d\n", e.quantidadeDiarias);
-        printf("Status: %s\n", e.estadiaAtiva ? "ATIVA" : "FINALIZADA");
-        printf("-------------------\n");
-
-        count++;
-        if (e.estadiaAtiva)
-            ativas++;
-        else
-            finalizadas++;
-    }
-    fclose(arquivo);
-
-    // Mostra estatísticas
-    printf("RESUMO:\n");
-    printf("Total de estadias: %d\n", count);
-    printf("Estadias ativas: %d\n", ativas);
-    printf("Estadias finalizadas: %d\n", finalizadas);
-    printf("\nPressione ENTER para voltar ao menu...");
-    limparEntrada();
     getchar();
 }
 
@@ -1285,6 +1057,7 @@ void calcularPontosFidelidade()
     printf("\nPressione ENTER para voltar ao menu...");
     getchar();
 }
+
 // ============================================================
 // FUNÇÕES DE CADASTRO
 // ============================================================
@@ -1299,13 +1072,13 @@ void calcularPontosFidelidade()
 void cadastrarCliente()
 {
     Cliente c;
-    c.codigoCliente = gerarCodigoCliente(); // Gera código automaticamente
+    c.codigoCliente = gerarCodigoCliente();  // Gera código automaticamente
 
     // Limpa buffer e coleta dados do cliente
     limparEntrada();
     printf("\nNome completo: ");
     fgets(c.nome, 50, stdin);
-    c.nome[strcspn(c.nome, "\n")] = 0; // Remove \n do final
+    c.nome[strcspn(c.nome, "\n")] = 0;  // Remove \n do final
 
     printf("Endereco: ");
     fgets(c.endereco, 50, stdin);
@@ -1318,7 +1091,7 @@ void cadastrarCliente()
     // Salva cliente no arquivo
     salvarClienteArquivo(c);
     printf("\nCliente cadastrado com sucesso! (Codigo %d)\n", c.codigoCliente);
-
+    
     // Pausa antes de voltar ao menu
     printf("\nPressione ENTER para voltar ao menu...");
     limparEntrada();
@@ -1415,7 +1188,7 @@ void cadastrarQuarto()
             printf("Valor invalido! A diaria deve ser positiva.\n");
     } while (q.valorDiaria <= 0);
 
-    q.estaOcupado = 0; // Novo quarto começa como livre
+    q.estaOcupado = 0;  // Novo quarto começa como livre
 
     // Salva quarto
     salvarQuartoArquivo(q);
@@ -1425,6 +1198,7 @@ void cadastrarQuarto()
     limparEntrada();
     getchar();
 }
+
 // ============================================================
 // FUNÇÃO PARA REGISTRAR NOVA ESTADIA
 // ============================================================
@@ -1440,7 +1214,7 @@ void cadastrarQuarto()
 void novaEstadia()
 {
     Estadia e;
-    e.codigoEstadia = gerarCodigoEstadia(); // Gera código automático
+    e.codigoEstadia = gerarCodigoEstadia();  // Gera código automático
 
     // Valida código do cliente
     do
@@ -1472,21 +1246,23 @@ void novaEstadia()
     // Mostra quartos disponíveis compatíveis com a capacidade
     FILE *arquivo = fopen(ARQ_QUARTOS, "rb");
     Quarto q;
-    int encontrou = 0;
+    int encontrou = 0;  // Flag para verificar se há quartos disponíveis
 
     printf("\nQuartos disponiveis para %d hospede(s):\n", hospedes);
 
     while (fread(&q, sizeof(Quarto), 1, arquivo))
     {
+        // Mostra apenas quartos livres com capacidade suficiente
         if (!q.estaOcupado && q.capacidade >= hospedes)
         {
-            printf("Quarto %d | Capacidade %d | Diaria: R$ %.2f\n",
+            printf("Quarto %d | Capacidade %d | Diaria: R$ %.2f\n", 
                    q.numeroQuarto, q.capacidade, q.valorDiaria);
             encontrou = 1;
         }
     }
     fclose(arquivo);
 
+    // Se não encontrou quartos disponíveis
     if (!encontrou)
     {
         printf("\nNenhum quarto disponivel com essa capacidade.\n");
@@ -1512,16 +1288,14 @@ void novaEstadia()
         return;
     }
 
-    // Lê data de entrada
-    if (!lerData("Data de entrada", &e.dataEntrada))
-    {
-        return;
+    // Lê data de entrada com validação
+    if (!lerData("Data de entrada", &e.dataEntrada)) {
+        return; // Falha na leitura da data
     }
 
-    // Lê data de saída
-    if (!lerData("Data de saida", &e.dataSaida))
-    {
-        return;
+    // Lê data de saída com validação
+    if (!lerData("Data de saida", &e.dataSaida)) {
+        return; // Falha na leitura da data
     }
 
     // Calcula quantidade de diárias
@@ -1532,20 +1306,20 @@ void novaEstadia()
         return;
     }
 
-    e.estadiaAtiva = 1;
+    e.estadiaAtiva = 1;  // Marca estadia como ativa
 
     // Salva estadia e marca quarto como ocupado
     salvarEstadiaArquivo(e);
     quartoOcupado(e.numeroQuarto, 1);
 
-    // Resumo
+    // Mostra resumo da estadia
     printf("\nEstadia registrada com sucesso!\n");
     printf("Codigo da estadia: %d\n", e.codigoEstadia);
     printf("Total de diarias: %d\n", e.quantidadeDiarias);
-
+    
     double valorTotal = e.quantidadeDiarias * escolhido.valorDiaria;
     printf("Valor total estimado: R$ %.2f\n", valorTotal);
-
+    
     printf("\nPressione ENTER para voltar ao menu...");
     limparEntrada();
     getchar();
@@ -1566,7 +1340,6 @@ void novaEstadia()
 void encerrarEstadia()
 {
     int codigo;
-
     // Valida código da estadia
     do
     {
@@ -1576,19 +1349,20 @@ void encerrarEstadia()
             printf("Codigo invalido! Deve ser positivo.\n");
     } while (codigo <= 0);
 
-    // Abre arquivos
+    // Abre arquivos para leitura e escrita temporária
     FILE *in = fopen(ARQ_ESTADIAS, "rb");
     FILE *out = fopen("temp.dat", "wb");
 
     Estadia e;
-    int achou = 0;
+    int achou = 0;  // Flag para verificar se encontrou a estadia
 
     // Processa todas as estadias
     while (fread(&e, sizeof(Estadia), 1, in))
     {
+        // Se encontrou a estadia ativa procurada
         if (e.codigoEstadia == codigo && e.estadiaAtiva)
         {
-            // Obtém informações do quarto
+            // Obtém informações do quarto para cálculo
             Quarto q;
             buscarQuarto(e.numeroQuarto, &q);
 
@@ -1596,31 +1370,220 @@ void encerrarEstadia()
 
             printf("\nValor total da estadia: R$ %.2f\n", total);
 
-            e.estadiaAtiva = 0;               // Finaliza estadia
-            quartoOcupado(e.numeroQuarto, 0); // Libera o quarto
+            e.estadiaAtiva = 0;  // Marca como finalizada
+            quartoOcupado(e.numeroQuarto, 0);  // Libera quarto
             achou = 1;
         }
-
-        fwrite(&e, sizeof(Estadia), 1, out); // Grava no arquivo temporário
+        fwrite(&e, sizeof(Estadia), 1, out);  // Escreve no temporário
     }
 
-    // Fecha e substitui arquivo original
+    // Fecha arquivos e substitui original
     fclose(in);
     fclose(out);
     remove(ARQ_ESTADIAS);
     rename("temp.dat", ARQ_ESTADIAS);
 
-    // Feedback
+    // Feedback para o usuário
     if (!achou)
         printf("Estadia nao encontrada.\n");
     else
         printf("Estadia encerrada!\n");
-
+    
     printf("\nPressione ENTER para voltar ao menu...");
     limparEntrada();
     getchar();
 }
 
+// ============================================================
+// FUNÇÕES PARA MOSTRAR DADOS (LISTAGENS)
+// ============================================================
+
+/*
+ * Função: mostrarClientes
+ * Objetivo: Listar todos os clientes cadastrados no sistema
+ *           Inclui contador total
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarClientes()
+{
+    FILE *arquivo = fopen(ARQ_CLIENTES, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhum cliente cadastrado.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Cliente c;
+    int count = 0;  // Contador de clientes
+
+    printf("\n=== LISTA DE CLIENTES ===\n");
+    printf("========================================\n");
+    
+    // Lê e exibe cada cliente
+    while (fread(&c, sizeof(Cliente), 1, arquivo))
+    {
+        printf("\nCodigo: %d\n", c.codigoCliente);
+        printf("Nome: %s\n", c.nome);
+        printf("Endereco: %s\n", c.endereco);
+        printf("Telefone: %s\n", c.telefone);
+        printf("-------------------\n");
+        count++;
+    }
+    fclose(arquivo);
+    
+    printf("Total de clientes: %d\n", count);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+/*
+ * Função: mostrarFuncionarios
+ * Objetivo: Listar todos os funcionários cadastrados
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarFuncionarios()
+{
+    FILE *arquivo = fopen(ARQ_FUNCIONARIOS, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhum funcionario cadastrado.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Funcionario func;
+    int count = 0;
+
+    printf("\n=== LISTA DE FUNCIONaRIOS ===\n");
+    printf("========================================\n");
+    while (fread(&func, sizeof(Funcionario), 1, arquivo))
+    {
+        printf("\nCodigo: %d\n", func.codigoFuncionario);
+        printf("Nome: %s\n", func.nome);
+        printf("Telefone: %s\n", func.telefone);
+        printf("Cargo: %s\n", func.cargo);
+        printf("Salario: R$ %.2f\n", func.salario);
+        printf("-------------------\n");
+        count++;
+    }
+    fclose(arquivo);
+    
+    printf("Total de funcionarios: %d\n", count);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+/*
+ * Função: mostrarQuartos
+ * Objetivo: Listar todos os quartos com status de ocupação
+ *           Inclui estatísticas: total, ocupados e livres
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarQuartos()
+{
+    FILE *arquivo = fopen(ARQ_QUARTOS, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhum quarto cadastrado.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Quarto q;
+    int count = 0;      // Total de quartos
+    int ocupados = 0;   // Quartos ocupados
+    int livres = 0;     // Quartos livres
+
+    printf("\n=== LISTA DE QUARTOS ===\n");
+    printf("========================================\n");
+    while (fread(&q, sizeof(Quarto), 1, arquivo))
+    {
+        printf("\nNumero: %d\n", q.numeroQuarto);
+        printf("Capacidade: %d hospedes\n", q.capacidade);
+        printf("Valor da diaria: R$ %.2f\n", q.valorDiaria);
+        printf("Status: %s\n", q.estaOcupado ? "OCUPADO" : "LIVRE");
+        printf("-------------------\n");
+        
+        count++;
+        if (q.estaOcupado)
+            ocupados++;
+        else
+            livres++;
+    }
+    fclose(arquivo);
+    
+    // Mostra estatísticas
+    printf("RESUMO:\n");
+    printf("Total de quartos: %d\n", count);
+    printf("Quartos ocupados: %d\n", ocupados);
+    printf("Quartos livres: %d\n", livres);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
+
+/*
+ * Função: mostrarEstadias
+ * Objetivo: Listar todas as estadias registradas
+ *           Inclui status (ativa/finalizada) e estatísticas
+ * Parâmetros: Nenhum
+ * Retorno: void
+ */
+void mostrarEstadias()
+{
+    FILE *arquivo = fopen(ARQ_ESTADIAS, "rb");
+    if (!arquivo)
+    {
+        printf("Nenhuma estadia registrada.\n");
+        printf("\nPressione ENTER para voltar ao menu...");
+        getchar();
+        return;
+    }
+
+    Estadia e;
+    int count = 0;          // Total de estadias
+    int ativas = 0;         // Estadias ativas
+    int finalizadas = 0;    // Estadias finalizadas
+
+    printf("\n=== LISTA DE ESTADIAS ===\n");
+    printf("========================================\n");
+    while (fread(&e, sizeof(Estadia), 1, arquivo))
+    {
+        printf("\nCodigo da estadia: %d\n", e.codigoEstadia);
+        printf("Codigo do cliente: %d\n", e.codigoCliente);
+        printf("Numero do quarto: %d\n", e.numeroQuarto);
+        printf("Data de entrada: %02d/%02d/%04d\n", e.dataEntrada.dia, e.dataEntrada.mes, e.dataEntrada.ano);
+        printf("Data de saida: %02d/%02d/%04d\n", e.dataSaida.dia, e.dataSaida.mes, e.dataSaida.ano);
+        printf("Quantidade de diarias: %d\n", e.quantidadeDiarias);
+        printf("Status: %s\n", e.estadiaAtiva ? "ATIVA" : "FINALIZADA");
+        printf("-------------------\n");
+        
+        count++;
+        if (e.estadiaAtiva)
+            ativas++;
+        else
+            finalizadas++;
+    }
+    fclose(arquivo);
+    
+    // Mostra estatísticas
+    printf("RESUMO:\n");
+    printf("Total de estadias: %d\n", count);
+    printf("Estadias ativas: %d\n", ativas);
+    printf("Estadias finalizadas: %d\n", finalizadas);
+    printf("\nPressione ENTER para voltar ao menu...");
+    limparEntrada();
+    getchar();
+}
 
 // ============================================================
 // FUNÇÃO PRINCIPAL - MENU DO SISTEMA
@@ -1634,48 +1597,48 @@ void encerrarEstadia()
  */
 int main()
 {
-    int menu; // Armazena opção escolhida pelo usuário
-
+    int menu;  // Armazena opção escolhida pelo usuário
     do
     {
         // Exibe menu com categorias organizadas
         printf("\n========== HOTEL DESCANSO GARANTIDO ==========\n");
-
+        
         printf("\n=== CADASTROS ===\n");
         printf("1 - Cadastrar novo cliente\n");
         printf("2 - Cadastrar novo funcionario\n");
         printf("3 - Cadastrar novo quarto\n");
-
+        
         printf("\n=== ESTADIAS ===\n");
         printf("4 - Registrar nova estadia\n");
         printf("5 - Encerrar estadia\n");
-
+        
         printf("\n=== CONSULTAS ===\n");
         printf("6 - Mostrar todos os clientes\n");
         printf("7 - Mostrar todos os funcionarios\n");
         printf("8 - Mostrar todos os quartos\n");
         printf("9 - Mostrar todas as estadias\n");
-
+        
         printf("\n=== PESQUISAS ===\n");
         printf("10 - Pesquisar cliente\n");
         printf("11 - Pesquisar funcionario\n");
         printf("12 - Mostrar estadias de um cliente\n");
         printf("13 - Calcular pontos de fidelidade\n");
-
+        
         printf("\n=== SISTEMA ===\n");
         printf("0 - Sair\n");
-
+        
         printf("\nOpcao: ");
         scanf("%d", &menu);
-        limparEntrada();
-
+        
         if (menu < 0)
         {
             printf("Opcao invalida! Digite um numero positivo.\n");
+            limparEntrada();
+            getchar();
             continue;
         }
 
-        // Switch para ir para cada função (ainda não implementadas)
+        // Switch para ir para cada função
         switch (menu)
         {
         case 1:
@@ -1688,10 +1651,10 @@ int main()
             cadastrarQuarto();
             break;
         case 4:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Nova estadia\n");
+            novaEstadia();
             break;
         case 5:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Encerrar estadia\n");
+            encerrarEstadia();
             break;
         case 6:
             mostrarClientes();
@@ -1706,10 +1669,10 @@ int main()
             mostrarEstadias();
             break;
         case 10:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Pesquisar cliente\n");
+            pesquisarCliente();
             break;
         case 11:
-            printf("\n[FUNCAO NAO IMPLEMENTADA] Pesquisar funcionario\n");
+            pesquisarFuncionario();
             break;
         case 12:
             mostrarEstadiasCliente();
@@ -1724,15 +1687,12 @@ int main()
         default:
             // Opção inválida
             printf("Opcao invalida! Digite um numero entre 0 e 13.\n");
-        }
-
-        if (menu != 0)
-        {
-            printf("\nPressione ENTER para voltar ao menu...");
+            limparEntrada();
             getchar();
         }
 
-    } while (menu != 0); // Continua até usuário escolher sair (0)
+    } while (menu != 0);  // Continua até usuário escolher sair (0)
 
-    return 0; // Retorno padrão indicando execução bem sucedida
+    return 0;  // Retorno padrão indicando execução bem sucedida
 }
+                
