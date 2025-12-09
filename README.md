@@ -382,6 +382,88 @@ printf("Dias entre 01/01 e 10/01: %d (esperado: 9)\n",
   - Mensagens de erro são claras
   - Formatação é consistente
 
+### Casos de testes ✅
+1. Cadastro de Cliente – Nome simples ✅
+Objetivo: Validar cadastro básico de cliente
+ Entrada:
+Nome: Maria Silva
+Endereço: Rua A
+Telefone: 99999-0000
+ Pré-condições: Arquivo clientes.bin vazio
+ Resultado esperado:
+* Cliente cadastrado com código 1
+
+2. Cadastro de Cliente – Nome muito longo ✅
+ Resultado esperado:
+ * Sistema aceita cadastrar
+
+3. Cadastro de Cliente – Telefone com caracteres especiais ✅
+Entrada: Telefone: (31) 99999-5555
+ Resultado esperado:
+ * Sistema aceita
+
+
+4. Cadastro de Funcionário – Salário negativo ✅
+Entrada: Salário: -5000
+ Resultado esperado:
+ * Mensagem: “Valor inválido! O salário não pode ser negativo.”
+ * Solicitar novo valor
+
+5. Cadastro de Funcionário – Cadastro completo✅
+Entrada válida: nome, telefone, cargo, salário
+ Resultado esperado:
+ * Funcionário cadastrado!
+
+6. Cadastro de Quarto – Número repetido ✅
+Pré-condição: Quarto 101 já existe
+ Entrada: número = 101
+ Resultado esperado:
+ * Mensagem: "Já existe um quarto com esse número"
+ * Cancelar cadastro
+
+ 7. Cadastro de Quarto – Capacidade inválida✅
+Entrada: capacidade = -3
+ Resultado esperado:
+ * Capacidade invalida! Dese ser maior que zero.
+
+8. Cadastro de Quarto – Valor da diária zero✅
+Entrada: valorDiaria = 0
+ Resultado esperado:
+ * Exibir: Valor invalido! A diaria deve ser positiva.
+ * Solicitar valor novamente
+
+ 9. Registrar Estadia – Cliente inexistente ✅
+Entrada: código do cliente = 999
+ Resultado:
+ * Mensagem: “Cliente não encontrado”
+ * Cancelar operação
+
+10. Registrar Estadia – Nenhum quarto compatível✅
+Pré-condição:
+Só há quarto capacidade 2
+ Entrada: hóspedes = 5
+ Resultado:
+ * Nenhum quarto disponível com essa capacidade
+
+ 11. Encerrar Estadia – Código inexistente ✅
+Entrada: código = 999
+ Resultado:
+ * Mensagem: “Estadia não encontrada”
+
+12. Pesquisar Cliente – Nome parcial ✅
+Entrada: busca por “Mar”
+ Pré-condição: clientes: “Marcos”, “Maria”, “João”
+ Resultado:
+ * Exibir Marcos e Maria
+ * João não aparece
+
+ 13. Calcular Pontos de Fidelidade – cliente sem estadias ✅
+Pré-condição: cliente recém-cadastrado
+ Resultado esperado:
+ * Nenhuma estadia registrada
+
+
+
 
 ### **📤 ENTREGAS ESPERADAS:**
 - Arquivo final: `hotel.c`
