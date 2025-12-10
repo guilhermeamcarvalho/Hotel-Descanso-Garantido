@@ -507,6 +507,76 @@ Pré-condição: nenhum funcionário cadastrado
 Resultado:
 * Exibir: “Nenhum funcionário cadastrado”
 
+21. Registrar Estadia – Data de saída anterior à entrada ✅
+
+Entrada: Data Entrada: 15 10 2024, Data Saída: 10 10 2024
+Resultado esperado:
+* Mensagem: "Datas invalidas! A data de saida deve ser posterior a data de entrada."
+* Retornar ao menu
+
+22. Registrar Estadia – Data Inválida (Dia inexistente) ✅
+
+Entrada: Data Entrada: 32 01 2024
+Resultado esperado:
+* Mensagem: "Data invalida! Verifique se o dia, mes e ano estao corretos."
+* Solicitar data novamente
+
+23. Registrar Estadia – Ano Bissexto (29 de Fev) ✅
+
+Entrada: Data Entrada: 29 02 2024
+Resultado esperado:
+* Sistema aceita a data e prossegue
+
+24. Registrar Estadia – Ano Não Bissexto (29 de Fev) ✅
+
+Entrada: Data Entrada: 29 02 2023
+Resultado esperado:
+* Mensagem: "Data invalida!" (Fevereiro tem apenas 28 dias em 2023)
+
+25. Registrar Estadia – Quarto já Ocupado ✅
+
+Pré-condição: Quarto 105 consta como "OCUPADO"
+Entrada: Quarto desejado: 105
+Resultado esperado:
+* Mensagem: "Quarto invalido ou indisponivel!"
+* Não permitir a reserva
+
+26. Registrar Estadia – Capacidade exata ✅
+
+Pré-condição: Quarto 102 tem capacidade para 2 pessoas
+Entrada: Hóspedes: 2
+Resultado esperado:
+* O sistema deve listar o Quarto 102 como opção disponível
+
+27. Encerrar Estadia – Liberação de Status do Quarto ✅
+
+Pré-condição: Estadia ativa no Quarto 201 (Status atual: Ocupado)
+Entrada: Código da estadia correta para encerramento
+Resultado esperado:
+* Mensagem "Estadia encerrada!"
+* Na listagem, o Quarto 201 deve aparecer como "LIVRE"
+
+28. Calcular Pontos de Fidelidade – Cálculo matemático ✅
+
+Pré-condição: Cliente tem 2 estadias finalizadas somando 5 diárias totais
+Entrada: Código do cliente
+Resultado esperado:
+* Exibir: "Pontos de fidelidade: 50 pontos"
+
+29. Registrar Estadia – Hóspedes Zero ✅
+
+Entrada: Quantidade de hospedes: 0
+Resultado esperado:
+* Mensagem: "Quantidade invalida! Deve ser maior que zero."
+
+30. Pesquisar Cliente – Código não numérico ✅
+
+Entrada: Código: "abc"
+Resultado esperado:
+* Sistema trata a entrada inválida (não entra em loop infinito)
+* Retorna ao menu ou pede o dado novamente
+
+
 ### **📤 ENTREGAS ESPERADAS:**
 - Arquivo final: `hotel.c`
 - Relatório de testes
