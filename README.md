@@ -8,9 +8,9 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 **- Samuel Henrique Alvarenga e Lopes**  
 
 **-Foto das sprints realizadas-**
-[Sprint 25/11/2025](<Imagens Sprints/Sprint1.jpg>)
-[Sprint2 27/12/2025](<Imagens Sprints/Sprint2.jpg>)
-[Sprint3 03/12/2025](<Imagens Sprints/Sprint3.jpg>)
+![Sprint 25/11/2025](<Imagens Sprints/Sprint1.jpg>)
+![Sprint2 27/12/2025](<Imagens Sprints/Sprint2.jpg>)
+![Sprint3 03/12/2025](<Imagens Sprints/Sprint3.jpg>)
 ---
 
 ## **📋 SUMÁRIO DE ETAPAS**
