@@ -462,8 +462,50 @@ Pré-condição: cliente recém-cadastrado
  Resultado esperado:
  * Nenhuma estadia registrada
 
+14. Cadastro de Cliente – Campos vazios
+
+Entrada: Nome="", Endereço="", Telefone=""
+Resultado esperado:
+
+ * O sistema aceita 
 
 
+15. Cadastro de Cliente – Caracteres especiais no nome
+
+Entrada: José da Silva @
+Resultado esperado: 
+ * sistema salva sem problemas
+
+16. Cadastro Funcionário – Salário com vírgula
+
+Entrada: Salário: 2500,50
+Resultado esperado:
+ * O sistema aceita
+
+17. Cadastro de Quarto – Número zero
+
+Entrada: número = 0
+Resultado:
+ * Mensagem “Número inválido! O numero do quarto deve ser positivo”
+
+18. Cadastro de Quarto – Número negativo
+
+Entrada: número = -15
+Resultado:
+* Sistema rejeita e solicita novamente
+* Mensagem “Número inválido! O numero do quarto deve
+
+19. Cadastro de Quarto – Valor da diária como texto
+
+Entrada: “abc”
+Resultado:
+ * Sistema aceita o cadastro
+
+20. Pesquisar Funcionário – lista vazia
+
+Pré-condição: nenhum funcionário cadastrado
+Resultado:
+* Exibir: “Nenhum funcionário cadastrado”
 
 ### **📤 ENTREGAS ESPERADAS:**
 - Arquivo final: `hotel.c`
