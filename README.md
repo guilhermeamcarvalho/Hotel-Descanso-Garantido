@@ -5,8 +5,12 @@ Sistema em C desenvolvido para gerenciar clientes, funcionários, quartos e esta
 **Sistema de Gerenciamento Hoteleiro - Hotel Descanso Garantido**  
 **Equipe: - Guilherme Augusto Martins de Carvalho**
 **- Rafael Galileu Thales de Oliveira**
-**- Samuel Henrique Alvarenga e Lopoes**  
+**- Samuel Henrique Alvarenga e Lopes**  
 
+**-Foto das sprints realizadas-**
+[Sprint 1](<Imagens Sprints/Sprint1.jpg>)
+[Sprint2](<Imagens Sprints/Sprint2.jpg>)
+[Sprint3](<Imagens Sprints/Sprint3.jpg>)
 ---
 
 ## **📋 SUMÁRIO DE ETAPAS**
@@ -623,10 +627,10 @@ Resultado esperado:
 ## **📋 CHECKLIST DE ENTREGA FINAL**
 
 ### **Arquivos a serem entregues:**
-- [ ] `hotel.c` (código completo)
-- [ ] `README.md` (documentação)
-- [ ] `clientes.bin`, `funcionarios.bin`, etc. (dados de exemplo)
-- [ ] Relatório de testes
+- [✅] `hotel.c` (código completo)
+- [✅] `README.md` (documentação)
+- [✅] `clientes.bin`, `funcionarios.bin`, etc. (dados de exemplo)
+- [✅] Relatório de testes
 
 ### **Documentação a ser preenchida:**
 - [ ] Nomes completos dos integrantes
